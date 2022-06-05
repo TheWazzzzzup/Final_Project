@@ -1,8 +1,10 @@
-﻿class FinalProject
+﻿using FinalProject;
+class Porgram
 {
     public static void Main(string[] args)
     {
-
+        var a = new string[50, 50];
+        Maps.Create(a);
     }
 }
 
