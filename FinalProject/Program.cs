@@ -3,10 +3,11 @@ class Porgram
 {
     public static void Main(string[] args)
     {
-        var d = new string[30,110];
+        Random rnd = new Random();
+        var d = new string[rnd.Next(10,30),rnd.Next(30,110)];
         Maps.CreateFrame(d);
         Maps.PrintMap(d);
-        Maps.PlayerMovement(1,1);
+        Maps.PlayerMovement(1,1,d);
     }
 }
 

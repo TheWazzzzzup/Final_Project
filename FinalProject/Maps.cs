@@ -8,44 +8,51 @@ namespace FinalProject
 {
     internal class Maps
     {
-        public static void PlayerMovement(int row,int col)
+        public static void PlayerMovement(int row,int col,string[,] map)
         {
             ConsoleKeyInfo currentPress = Console.ReadKey();
+            int mapHieght = map.GetLength(0);
+            int mapLength = map.GetLength(1);
 
             Console.SetCursorPosition(row, col);
            
             // Right
-            if (currentPress.Key == ConsoleKey.D && row < 108)
+            if (currentPress.Key == ConsoleKey.D && row < mapLength - 2)
             {
                 row++;
                 Console.SetCursorPosition(row, col);
-                PlayerMovement(row, col);
+                PlayerMovement(row, col,map);
             }
             // Left
             if (currentPress.Key == ConsoleKey.A && row > 1)
             {
                 row--;
                 Console.SetCursorPosition(row, col);
-                PlayerMovement(row, col);
+                PlayerMovement(row, col, map);
             }
             //Up
             if (currentPress.Key == ConsoleKey.W && col > 1)
             {
                 col--;
                 Console.SetCursorPosition(row, col);
-                PlayerMovement(row, col);
+                PlayerMovement(row, col, map); 
             }
             //Down
-            if (currentPress.Key == ConsoleKey.S && col < 28)
+            if (currentPress.Key == ConsoleKey.S && col < mapHieght - 2)
             {
                 col++;
                 Console.SetCursorPosition(row, col);
-                PlayerMovement(row, col);
+                PlayerMovement(row, col, map);
             }
             else
             {
-                PlayerMovement(row, col);
+                PlayerMovement(row, col, map);
             }
+        }
+
+        private void Refresh()
+        {
+
         }
 
         public static void PrintMap(string[,] map)
