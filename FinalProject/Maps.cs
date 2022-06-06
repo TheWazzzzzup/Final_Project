@@ -10,7 +10,7 @@ namespace FinalProject
     {
         public static void PlayerMovement(int row,int col,string[,] map)
         {
-            ConsoleKeyInfo currentPress = Console.ReadKey();
+            ConsoleKeyInfo currentPress = Console.ReadKey(true);
             int mapHieght = map.GetLength(0);
             int mapLength = map.GetLength(1);
 
@@ -50,9 +50,14 @@ namespace FinalProject
             }
         }
 
-        private void Refresh()
+        /// <summary>
+        /// Refresh the console with annoying shit
+        /// </summary>
+        /// <param name="map"></param>
+        private static void Refresh(string[,] map)
         {
-
+            Console.Clear();
+            PrintMap(map);
         }
 
         public static void PrintMap(string[,] map)
@@ -65,6 +70,7 @@ namespace FinalProject
                 }
                 Console.WriteLine();
             }
+            Console.SetCursorPosition(1, 1);
         }
         
         /// <summary>

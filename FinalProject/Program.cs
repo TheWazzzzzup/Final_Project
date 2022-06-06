@@ -3,6 +3,7 @@ class Porgram
 {
     public static void Main(string[] args)
     {
+        Console.ReadKey();
         Random rnd = new Random();
         var d = new string[rnd.Next(10,30),rnd.Next(30,110)];
         Maps.CreateFrame(d);
