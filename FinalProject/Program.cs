@@ -3,8 +3,10 @@ class Porgram
 {
     public static void Main(string[] args)
     {
-        var a = new string[50, 50];
-        Maps.Create(a);
+        var d = new string[30,110];
+        Maps.CreateFrame(d);
+        Maps.PrintMap(d);
+        Maps.PlayerMovement(1,1);
     }
 }
 
