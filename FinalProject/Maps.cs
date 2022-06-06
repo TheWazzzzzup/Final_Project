@@ -15,7 +15,6 @@ namespace FinalProject
             int mapLength = map.GetLength(1);
 
             Console.SetCursorPosition(row, col);
-           
             // Right
             if (currentPress.Key == ConsoleKey.D && row < mapLength - 2)
             {
@@ -48,16 +47,6 @@ namespace FinalProject
             {
                 PlayerMovement(row, col, map);
             }
-        }
-
-        /// <summary>
-        /// Refresh the console with annoying shit
-        /// </summary>
-        /// <param name="map"></param>
-        private static void Refresh(string[,] map)
-        {
-            Console.Clear();
-            PrintMap(map);
         }
 
         public static void PrintMap(string[,] map)
