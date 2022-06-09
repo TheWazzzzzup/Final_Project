@@ -28,7 +28,6 @@ namespace FinalProject
         private static int exitPointY;
 
 
-
         static void PlayerCheck()
         {
             if (playerX == mineX && playerY == mineY)
@@ -41,8 +40,6 @@ namespace FinalProject
                 Console.Clear();
                 Console.WriteLine("Chest Engaged");
             }
-            // Enemy check
-
         }
 
         public static void PlayerMovement(int row,int col,string[,] map)
