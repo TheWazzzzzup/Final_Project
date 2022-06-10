@@ -18,11 +18,12 @@ namespace FinalProject
         private static int mineX;
         private static int mineY;
         
-        private static int chestX = 1;
-        private static int chestY = 8;
+        private static int chestX;
+        private static int chestY;
 
         private static int enterPointX;
         private static int enterPointY;
+
         
         private static int exitPointX;
         private static int exitPointY;
@@ -209,6 +210,8 @@ namespace FinalProject
             // Check with "@"
             mineX = randomLocX.Next(1, row - 2);
             mineY = randomLocX.Next(1, col - 2);
+            chestX = randomLocX.Next(1, row - 2);
+            chestY = randomLocX.Next(1, col - 2);
         }
 
     }
