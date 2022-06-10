@@ -30,11 +30,13 @@ namespace FinalProject
 
         static void PlayerCheck()
         {
+            // Mine Chechk
             if (playerX == mineX && playerY == mineY)
             {
                 Console.Clear();
                 Console.WriteLine("Mine Engaged");
             }
+            // Chest Check
             else if (playerX == chestX && playerY == chestY)
             {
                 Console.Clear();
@@ -125,9 +127,7 @@ namespace FinalProject
         /// </summary>
         /// <param name="mapSize"></param>
         public static void CreateFrame(string[,] mapSize)
-        {
-            // Note: Row max is 40 Col max is 110, in your screen size i guess...
-            
+        {            
             //row == y
             int row = mapSize.GetLength(0);
 
@@ -155,6 +155,12 @@ namespace FinalProject
                     }
                 }
             }
+            // Small Map: Add Small Map Logic
+            if (row < 20 && col < 60)
+            {
+
+            }
+
             EntityGenerator(row, col);
 
             // Frame Undependices(On Frame Scale) 
