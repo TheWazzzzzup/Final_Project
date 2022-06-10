@@ -12,8 +12,8 @@ namespace FinalProject
         private static int playerX;
         private static int playerY;
         
-        private static int enemyX;
-        private static int enemyY;
+        private static int enemyX = 9;
+        private static int enemyY = 9;
         
         private static int mineX;
         private static int mineY;
@@ -39,6 +39,22 @@ namespace FinalProject
             {
                 Console.Clear();
                 Console.WriteLine("Chest Engaged");
+            }
+            // Enemy check
+            var boxCollider = new int[,]
+           {
+                {enemyX -1,enemyX,enemyX + 1},
+                {enemyY -1,enemyY,enemyY + 1}
+           };
+            for (int i = 0; i < boxCollider.GetLength(1); i++)
+            {
+                for (int j = 0; j < boxCollider.GetLength(1); j++)
+                {
+                    if (boxCollider[0, i] == playerX && boxCollider[1, j] == playerY)
+                    {
+                        Console.Beep();
+                    }
+                }
             }
         }
 
@@ -150,7 +166,7 @@ namespace FinalProject
 
             mapSize[chestX, chestY] = "#";
 
-            mapSize[9,9] = "N";
+            mapSize[enemyX,enemyY] = "N";
 
         }
 
