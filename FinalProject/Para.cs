@@ -10,6 +10,7 @@ namespace FinalProject
     {
         private int _hp;
         private int _damage;
+        private bool _isDead = false;
         static private int _maxHp;
 
         public Para (int hp, int damage)
@@ -18,6 +19,7 @@ namespace FinalProject
             _damage = damage;
             _maxHp = hp;
         }
+
 
         public void Heal (int healAmount)
         {
@@ -46,6 +48,11 @@ namespace FinalProject
         public void GetDamage(Para challanger)
         {
             _hp -= challanger._damage;
+            if (_hp < 0)
+            {
+                _hp = 0;
+                _isDead = true;
+            }
         }
     }
 }

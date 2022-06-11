@@ -18,6 +18,11 @@ namespace FinalProject
             _name = name;
         }
 
+        public int CoinBalance()
+        {
+            return _coins;  
+        }
+
         /// <summary>
         /// Accept a value 5 for coin addition and -5 for coin reduction
         /// </summary>
