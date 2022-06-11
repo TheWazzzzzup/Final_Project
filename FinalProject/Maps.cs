@@ -214,7 +214,6 @@ namespace FinalProject
             mineX = randomLocX.Next(1, row - 2);
             mineY = randomLocX.Next(1, col - 2);
         }
-
     }
 }
 
