@@ -20,6 +20,10 @@ namespace FinalProject
             _maxHp = hp;
         }
 
+        public bool IsDead()
+        {
+            return _isDead;
+        }
 
         public void Heal (int healAmount)
         {
@@ -52,6 +56,7 @@ namespace FinalProject
             {
                 _hp = 0;
                 _isDead = true;
+                Dead();
             }
         }
     }

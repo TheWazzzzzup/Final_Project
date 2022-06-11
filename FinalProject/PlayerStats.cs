@@ -13,6 +13,14 @@ namespace FinalProject
         private string _name;
         private int _coins = 0;
 
+        public void PlayerDead()
+        {
+            if (PlayerPara.IsDead() == true)
+            {
+                Console.WriteLine($"{_name} you lost, LOL");
+            }
+        }
+
         public PlayerStats(string name)
         {
             _name = name;
