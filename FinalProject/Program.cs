@@ -3,6 +3,9 @@ class Porgram
 {
     public static void Main(string[] args)
     {
+        // Turns text color into selcted color
+        // Console.ForegroundColor = ConsoleColor.Green;
+
         Console.ReadKey();
         Random rnd = new Random();
         var d = new string[rnd.Next(10,30),rnd.Next(30,110)];

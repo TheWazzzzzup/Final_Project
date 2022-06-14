@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace FinalProject
 {
+    // i guess player class as a whole needs to be save
+    // if player IsDead == false user should also saved loaded map and mayber even location
+    // need to create few menus regarding that
+
     class PlayerStats
     {
         Para PlayerPara = new Para(100,7);
@@ -17,7 +21,7 @@ namespace FinalProject
         {
             if (PlayerPara.IsDead() == true)
             {
-                Console.WriteLine($"{_name} you lost, LOL");
+                Console.WriteLine($"{_name} you lost, HAHAHAHAHAHAHAHA");
             }
         }
 

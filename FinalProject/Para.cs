@@ -56,7 +56,6 @@ namespace FinalProject
             {
                 _hp = 0;
                 _isDead = true;
-                Dead();
             }
         }
     }
