@@ -8,8 +8,9 @@ namespace FinalProject
 {
     static class EnemyGen
     {
-        static string[] EnemyName = new string[8];
-        // Name has to be Bat 
+        static string[] EnemyName = new string[8] {"Crow","Cat","Bat","","","","",""};
+        // Name has to be Bat related
+
 
     }
 }
