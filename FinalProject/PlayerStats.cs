@@ -3,21 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Runtime.Serialization;
 
 namespace FinalProject
 {
     // i guess player class as a whole needs to be save
     // if player IsDead == false user should also saved loaded map and mayber even location
     // need to create few menus regarding that
-
+    [DataContract] 
     class PlayerStats
     {
-        Para PlayerPara = new Para(100,7);
+        public Para PlayerPara = new Para(100,7);
 
+        [DataMember]
         private string _name;
+
+        [DataMember]
         private int _coins = 0;
 
-        public void PlayerDead()
+        public string GetName()
+        {
+            return _name;
+        }
+
+        public void IsPlayerDead()
         {
             if (PlayerPara.IsDead() == true)
             {

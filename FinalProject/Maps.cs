@@ -6,29 +6,33 @@ using System.Threading.Tasks;
 
 namespace FinalProject
 {
-    internal class Maps
+    class Maps
     {
         // Player,Enemy,Mine,Chest,EntryPoint,ExitPoint
-        private static int playerX;
-        private static int playerY;
+        private int playerX;
+        private int playerY;
         
-        private static int enemyX = 9;
-        private static int enemyY = 9;
+        private int enemyX = 9;
+        private int enemyY = 9;
         
-        private static int mineX;
-        private static int mineY;
+        private int mineX;
+        private int mineY;
         
-        private static int chestX = 1;
-        private static int chestY = 8;
+        private int chestX = 1;
+        private int chestY = 8;
 
-        private static int enterPointX;
-        private static int enterPointY;
+        private int enterPointX;
+        private int enterPointY;
         
-        private static int exitPointX;
-        private static int exitPointY;
+        private int exitPointX;
+        private int exitPointY;
 
+        //
+        PlayerStats Wazzzzzup = new PlayerStats("Amit");
 
-        static void PlayerCheck()
+        //
+        
+        private void PlayerCheck()
         {
             // Mine Chechk
             if (playerX == mineX && playerY == mineY)
@@ -54,13 +58,13 @@ namespace FinalProject
                 {
                     if (boxCollider[0, i] == playerX && boxCollider[1, j] == playerY)
                     {
-                        Console.Beep();
+                    
                     }
                 }
             }
         }
 
-        public static void PlayerMovement(int row,int col,string[,] map)
+        public void PlayerMovement(int row,int col,string[,] map)
         {
             PlayerCheck();
             ConsoleKeyInfo currentPress = Console.ReadKey(true);
@@ -109,7 +113,7 @@ namespace FinalProject
         }
 
         // Set To Become a private methods
-        public static void PrintMap(string[,] map)
+        public void PrintMap(string[,] map)
         {
             for (int i = 0; i < map.GetLength(0); i++)
             {
@@ -126,7 +130,7 @@ namespace FinalProject
         /// Creates frame for map [40 max,110 max]
         /// </summary>
         /// <param name="mapSize"></param>
-        public static void CreateFrame(string[,] mapSize)
+        public void CreateFrame(string[,] mapSize)
         {            
             //row == y
             int row = mapSize.GetLength(0);
@@ -176,13 +180,13 @@ namespace FinalProject
 
         }
 
-        private static void SetXY(int row, int col)
+        private void SetXY(int row, int col)
         {
             playerX = col;
             playerY = row;
         }
 
-        private static void EntityGenerator(int row,int col)
+        private void EntityGenerator(int row,int col)
         {
             Random randomLocX = new Random();
             Random randomLocY = new Random();

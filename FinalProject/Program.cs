@@ -9,10 +9,12 @@ class Porgram
         Console.ReadKey();
         Random rnd = new Random();
         var d = new string[rnd.Next(10,30),rnd.Next(30,110)];
-        Maps.CreateFrame(d);
-        Maps.PrintMap(d);
-        Maps.PlayerMovement(1,1,d);
+        Maps map = new Maps();
+        map.CreateFrame(d);
+        map.PrintMap(d);
+        map.PlayerMovement(1,1,d);
     }
+
 }
 
 // Fluff Ideas:
