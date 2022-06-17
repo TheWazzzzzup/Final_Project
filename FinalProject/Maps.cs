@@ -29,7 +29,7 @@ namespace FinalProject
 
         //
         PlayerStats Wazzzzzup = new PlayerStats("Amit");
-
+        EnemyGen enemy = new EnemyGen();
         //
         
         private void PlayerCheck()
@@ -58,7 +58,10 @@ namespace FinalProject
                 {
                     if (boxCollider[0, i] == playerX && boxCollider[1, j] == playerY)
                     {
-                    
+                        Console.WriteLine(Wazzzzzup.PlayerPara.GetHp());
+                        enemy.enemyPara.InflictDamage(Wazzzzzup.PlayerPara);
+                        Console.WriteLine(Wazzzzzup.PlayerPara.GetHp());
+
                     }
                 }
             }

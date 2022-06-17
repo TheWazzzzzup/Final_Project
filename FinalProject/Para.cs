@@ -47,6 +47,10 @@ namespace FinalProject
         public void InflictDamage(Para challanger)
         {
             challanger._hp -= _damage;
+            if (challanger._hp < 0)
+            {
+                challanger._hp = 0;
+            }
         }
 
         public void GetDamage(Para challanger)

@@ -8,6 +8,8 @@ namespace FinalProject
 {
     class EnemyGen
     {
+        public Para enemyPara;
+
         private int _damage;
         private string _name;
 
@@ -29,6 +31,7 @@ namespace FinalProject
             string drawName = EnemyName[rnd.Next(0,EnemyName.Length)];
             _name = drawName;
             _damage = EnemyNameDamage[drawName];
+            enemyPara = new Para(20,_damage);
         }
         // Name has to be Bat related
 
