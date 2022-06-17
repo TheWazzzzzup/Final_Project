@@ -20,8 +20,6 @@ class Porgram
 // This is why everything on his way represented in a similiar way 
 // because he catagorize is as (foe, reward);
 
-
-
 //The Project needs few things but i need to begin on stuff
 //1.Create 1st Level for testing
 //1.1.Walls need to be created in two catagories 1.unbreakable 2.breakable
