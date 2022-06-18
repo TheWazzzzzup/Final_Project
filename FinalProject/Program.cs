@@ -11,7 +11,7 @@ class Porgram
         var d = new string[rnd.Next(10,30),rnd.Next(30,110)];
         Maps map = new Maps();
         map.CreateFrame(d);
-        map.PrintMap(d);
+        map.PrintGame(d);
         map.PlayerMovement(1,1,d);
     }
 

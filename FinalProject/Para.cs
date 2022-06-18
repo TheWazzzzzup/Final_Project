@@ -50,6 +50,7 @@ namespace FinalProject
             if (challanger._hp < 0)
             {
                 challanger._hp = 0;
+                challanger._isDead = true;
             }
         }
 

@@ -27,12 +27,15 @@ namespace FinalProject
         private int exitPointX;
         private int exitPointY;
 
+        private bool _playerDead = false;
+        private bool _enemyDead = false;
+
         //
         PlayerStats Wazzzzzup = new PlayerStats("Amit");
         EnemyGen enemy = new EnemyGen();
         //
         
-        private void PlayerCheck()
+        private void PlayerCheck(string[,] _map)
         {
             // Mine Chechk
             if (playerX == mineX && playerY == mineY)
@@ -58,10 +61,15 @@ namespace FinalProject
                 {
                     if (boxCollider[0, i] == playerX && boxCollider[1, j] == playerY)
                     {
-                        Console.WriteLine(Wazzzzzup.PlayerPara.GetHp());
-                        enemy.enemyPara.InflictDamage(Wazzzzzup.PlayerPara);
-                        Console.WriteLine(Wazzzzzup.PlayerPara.GetHp());
-
+                        if (_playerDead == false && _enemyDead ==  false)
+                        {
+                            Wazzzzzup.PlayerPara.InflictDamage(enemy.enemyPara);
+                            Wazzzzzup.PlayerPara.GetDamage(enemy.enemyPara);
+                            _playerDead = Wazzzzzup.PlayerPara.IsDead();
+                            _enemyDead = enemy.enemyPara.IsDead();
+                            Console.Clear();
+                            PrintGame(_map);
+                        }
                     }
                 }
             }
@@ -69,7 +77,7 @@ namespace FinalProject
 
         public void PlayerMovement(int row,int col,string[,] map)
         {
-            PlayerCheck();
+            PlayerCheck(map);
             ConsoleKeyInfo currentPress = Console.ReadKey(true);
             int mapHieght = map.GetLength(0);
             int mapLength = map.GetLength(1);
@@ -116,7 +124,7 @@ namespace FinalProject
         }
 
         // Set To Become a private methods
-        public void PrintMap(string[,] map)
+        public void PrintGame(string[,] map)
         {
             for (int i = 0; i < map.GetLength(0); i++)
             {
@@ -126,9 +134,13 @@ namespace FinalProject
                 }
                 Console.WriteLine();
             }
-            Console.SetCursorPosition(1, 1);
+            Console.WriteLine($"Player HP: {Wazzzzzup.PlayerPara.GetHp()} Dead = {_playerDead}");
+            Console.WriteLine($"{enemy.GetName()} HP: {enemy.enemyPara.GetHp()} Dead = {enemy.enemyPara.IsDead()}");
+
+            // Should be next to Start Postion
+            Console.SetCursorPosition(1, 1);   
         }
-        
+
         /// <summary>
         /// Creates frame for map [40 max,110 max]
         /// </summary>
@@ -179,8 +191,7 @@ namespace FinalProject
 
             mapSize[chestX, chestY] = "#";
 
-            mapSize[enemyX,enemyY] = "N";
-
+            mapSize[enemyX, enemyY] = "N";         
         }
 
         private void SetXY(int row, int col)
