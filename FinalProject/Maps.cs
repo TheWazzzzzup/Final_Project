@@ -126,6 +126,10 @@ namespace FinalProject
         // Set To Become a private methods
         public void PrintGame(string[,] map)
         {
+            if (_enemyDead)
+            {
+                map[enemyX, enemyY] = " ";
+            }
             for (int i = 0; i < map.GetLength(0); i++)
             {
                 for (int j = 0; j < map.GetLength(1); j++)
