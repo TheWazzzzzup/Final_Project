@@ -28,29 +28,51 @@ namespace FinalProject
         private int exitPointY;
 
         private int currentLvl = 0;
+        
+        // Random number of steps will make the Console clear and show mine location for limited time
+        private int stepsTaken = 0;
+        private int stepsTarget;
 
-        private bool _lvlClear = false;
+        private bool _lvlClearRec = false;
         private bool _playerDead = false;
         private bool _enemyDead = false;
 
         //
-        PlayerStats Wazzzzzup = new PlayerStats("Amit");
-        EnemyGen enemy = new EnemyGen();
+        EnemyGen enemy;
+        PlayerStats GamePlayer = new PlayerStats("Amit");
         //
 
         public void LoadMap()
         {
-            currentLvl++;
+            enemy = new EnemyGen();
             Random rnd = new Random();
+            stepsTarget = rnd.Next(90, 150);
             var map = new string[rnd.Next(10, 30), rnd.Next(30, 110)];
+            currentLvl++;
             CreateFrame(map);
             PrintGame(map);
             PlayerMovement(playerY,playerX,map);
         }
 
-        private void PlayerCheck(string[,] _map)
+        private void LevelCleard(string[,] map)
         {
-            
+            if (_enemyDead == true)
+            {
+                Console.Clear();
+                _lvlClearRec = false;
+                _enemyDead = false;
+                LoadMap();
+            }
+            else
+            {
+                _lvlClearRec = true;
+                Console.Clear();
+                PrintGame(map);
+            }
+        }
+
+        private void PlayerCheck(string[,] _map)
+        {    
             // Mine Check
             if (playerX == mineX && playerY == mineY)
             {
@@ -68,18 +90,14 @@ namespace FinalProject
             {
                 if (playerX == exitPointX && playerY == exitPointY - 1)
                 {
-                    _lvlClear = true;
-                    Console.Clear();
-                    Console.WriteLine($"Exit Engaged LeftRight");
+                    LevelCleard(_map);
                 }
             }
             else
             {
                 if (playerX == exitPointX - 1 && playerY == exitPointY)
                 {
-                    _lvlClear = true;
-                    Console.Clear();
-                    Console.WriteLine("Exit Enaged UpDown");
+                    LevelCleard(_map);
                 }
             }
             // Enemy check
@@ -97,9 +115,9 @@ namespace FinalProject
                         if (_playerDead == false && _enemyDead ==  false)
                         {
                             // OnCollisonEnter""
-                            Wazzzzzup.PlayerPara.InflictDamage(enemy.enemyPara);
-                            Wazzzzzup.PlayerPara.GetDamage(enemy.enemyPara);
-                            _playerDead = Wazzzzzup.PlayerPara.IsDead();
+                            GamePlayer.PlayerPara.InflictDamage(enemy.enemyPara);
+                            GamePlayer.PlayerPara.GetDamage(enemy.enemyPara);
+                            _playerDead = GamePlayer.PlayerPara.IsDead();
                             _enemyDead = enemy.enemyPara.IsDead();
                             Console.Clear();
                             PrintGame(_map);
@@ -123,6 +141,7 @@ namespace FinalProject
             if (currentPress.Key == ConsoleKey.D && row < mapLength - 2)
             {
                 row++;
+                stepsTaken++;
                 Console.SetCursorPosition(row, col);
                 SetXY(row, col);
                 PlayerMovement(row, col,map);
@@ -131,6 +150,7 @@ namespace FinalProject
             if (currentPress.Key == ConsoleKey.A && row > 1)
             {
                 row--;
+                stepsTaken++;
                 Console.SetCursorPosition(row, col);
                 SetXY(row, col);
                 PlayerMovement(row, col, map);
@@ -139,6 +159,7 @@ namespace FinalProject
             if (currentPress.Key == ConsoleKey.W && col > 1)
             {
                 col--;
+                stepsTaken++;
                 Console.SetCursorPosition(row, col);
                 SetXY(row, col);
                 PlayerMovement(row, col, map); 
@@ -147,6 +168,7 @@ namespace FinalProject
             if (currentPress.Key == ConsoleKey.S && col < mapHieght - 2)
             {
                 col++;
+                stepsTaken++;
                 Console.SetCursorPosition(row, col);
                 SetXY(row, col);
                 PlayerMovement(row, col, map);
@@ -173,8 +195,14 @@ namespace FinalProject
                 }
                 Console.WriteLine();
             }
-            Console.WriteLine($"Current Lvl {currentLvl}");
-            Console.WriteLine($"Player HP: {Wazzzzzup.PlayerPara.GetHp()} Dead = {_playerDead}");
+            // Cant Load next level before killing enemy
+            if (_lvlClearRec == true)
+            {
+                Console.WriteLine("Must Kill All Monster before clearing level");
+            }
+
+            Console.WriteLine($"Current Lvl {currentLvl} Steps Taken {stepsTaken}");
+            Console.WriteLine($"Player HP: {GamePlayer.PlayerPara.GetHp()} Dead = {_playerDead}");
             Console.WriteLine($"{enemy.GetName()} HP: {enemy.enemyPara.GetHp()} Dead = {enemy.enemyPara.IsDead()}");
             // Debug
             Console.WriteLine($"Debug: PlayerX {playerX} PlayerY{playerY}");
@@ -186,7 +214,7 @@ namespace FinalProject
         }
 
         /// <summary>
-        /// Creates frame for map [40 max,110 max]
+        /// Creates frame for map [30 max,110 max]
         /// </summary>
         /// <param name="mapSize"></param>
         private void CreateFrame(string[,] mapSize)
