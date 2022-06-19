@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace FinalProject
 {
@@ -28,8 +29,9 @@ namespace FinalProject
         private int exitPointY;
 
         private int currentLvl = 0;
-        
-        // Random number of steps will make the Console clear and show mine location for limited time
+
+        // Random number of steps will make the Console clear and show mine location for limited time // Date time, time Span
+        System.Timers.Timer amit = new System.Timers.Timer(1000);
         private int stepsTaken = 0;
         private int stepsTarget;
 
@@ -258,8 +260,10 @@ namespace FinalProject
             mapSize[enterPointX, enterPointY] = "E";
             mapSize[exitPointX, exitPointY] = "X";
 
-            // Frame Undependices(Inside Frame Scale) 
-            mapSize[mineX, mineY] = "@";
+            // Frame Undependices(Inside Frame Scale)
+
+            // Need to be "Transperant"
+            mapSize[mineX, mineY] = "*";
 
             mapSize[chestX, chestY] = "#";
 
