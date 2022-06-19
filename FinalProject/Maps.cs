@@ -45,17 +45,7 @@ namespace FinalProject
             var map = new string[rnd.Next(10, 30), rnd.Next(30, 110)];
             CreateFrame(map);
             PrintGame(map);
-            PlayerMovement(GetEntryY(),GetEntryX(),map);
-        }
-
-        public int GetEntryX()
-        {
-            return playerX;
-        }
-       
-        public int GetEntryY()
-        {
-            return playerY;
+            PlayerMovement(playerY,playerX,map);
         }
 
         private void PlayerCheck(string[,] _map)
@@ -119,7 +109,7 @@ namespace FinalProject
             }
         }
 
-        public void PlayerMovement(int row,int col,string[,] map)
+        private void PlayerMovement(int row,int col,string[,] map)
         {
             PlayerCheck(map);
             ConsoleKeyInfo currentPress = Console.ReadKey(true);
@@ -169,7 +159,7 @@ namespace FinalProject
         }
 
         // Set To Become a private methods
-        public void PrintGame(string[,] map)
+        private void PrintGame(string[,] map)
         {
             if (_enemyDead)
             {
@@ -183,6 +173,7 @@ namespace FinalProject
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine($"Current Lvl {currentLvl}");
             Console.WriteLine($"Player HP: {Wazzzzzup.PlayerPara.GetHp()} Dead = {_playerDead}");
             Console.WriteLine($"{enemy.GetName()} HP: {enemy.enemyPara.GetHp()} Dead = {enemy.enemyPara.IsDead()}");
             // Debug
@@ -198,7 +189,7 @@ namespace FinalProject
         /// Creates frame for map [40 max,110 max]
         /// </summary>
         /// <param name="mapSize"></param>
-        public void CreateFrame(string[,] mapSize)
+        private void CreateFrame(string[,] mapSize)
         {            
             //row == y
             int row = mapSize.GetLength(0);
