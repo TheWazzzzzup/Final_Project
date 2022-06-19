@@ -12,14 +12,14 @@ namespace FinalProject
         private int playerX;
         private int playerY;
         
-        private int enemyX = 9;
-        private int enemyY = 9;
+        private int enemyX = 8;
+        private int enemyY = 8;
         
         private int mineX;
         private int mineY;
         
-        private int chestX = 1;
-        private int chestY = 8;
+        private int chestX;
+        private int chestY;
 
         private int enterPointX;
         private int enterPointY;
@@ -27,6 +27,7 @@ namespace FinalProject
         private int exitPointX;
         private int exitPointY;
 
+        private bool _lvlClear = false;
         private bool _playerDead = false;
         private bool _enemyDead = false;
 
@@ -35,9 +36,25 @@ namespace FinalProject
         EnemyGen enemy = new EnemyGen();
         //
         
+        public void LoadGame(Random rnd,Random rnd1)
+        {
+
+        }
+
+        public int GetEntryX()
+        {
+            return playerX;
+        }
+       
+        public int GetEntryY()
+        {
+            return playerY;
+        }
+
         private void PlayerCheck(string[,] _map)
         {
-            // Mine Chechk
+            
+            // Mine Check
             if (playerX == mineX && playerY == mineY)
             {
                 Console.Clear();
@@ -48,6 +65,25 @@ namespace FinalProject
             {
                 Console.Clear();
                 Console.WriteLine("Chest Engaged");
+            }
+            // Exit Check
+            if (exitPointX < exitPointY)
+            {
+                if (playerX == exitPointX && playerY == exitPointY - 1)
+                {
+                    _lvlClear = true;
+                    Console.Clear();
+                    Console.WriteLine($"Exit Engaged LeftRight");
+                }
+            }
+            else
+            {
+                if (playerX == exitPointX - 1 && playerY == exitPointY)
+                {
+                    _lvlClear = true;
+                    Console.Clear();
+                    Console.WriteLine("Exit Enaged UpDown");
+                }
             }
             // Enemy check
             var boxCollider = new int[,]
@@ -63,6 +99,7 @@ namespace FinalProject
                     {
                         if (_playerDead == false && _enemyDead ==  false)
                         {
+                            // OnCollisonEnter""
                             Wazzzzzup.PlayerPara.InflictDamage(enemy.enemyPara);
                             Wazzzzzup.PlayerPara.GetDamage(enemy.enemyPara);
                             _playerDead = Wazzzzzup.PlayerPara.IsDead();
@@ -82,8 +119,9 @@ namespace FinalProject
             int mapHieght = map.GetLength(0);
             int mapLength = map.GetLength(1);
 
-            Console.SetCursorPosition(row, col);
+            //Console.SetCursorPosition(playerX, playerY);
             SetXY(row, col);
+
             // Right
             if (currentPress.Key == ConsoleKey.D && row < mapLength - 2)
             {
@@ -140,9 +178,13 @@ namespace FinalProject
             }
             Console.WriteLine($"Player HP: {Wazzzzzup.PlayerPara.GetHp()} Dead = {_playerDead}");
             Console.WriteLine($"{enemy.GetName()} HP: {enemy.enemyPara.GetHp()} Dead = {enemy.enemyPara.IsDead()}");
+            // Debug
+            Console.WriteLine($"Debug: PlayerX {playerX} PlayerY{playerY}");
+            Console.WriteLine($"Debug: ExitX {exitPointX} ExitY {exitPointY}");
+            Console.WriteLine(Console.GetCursorPosition());
 
-            // Should be next to Start Postion
-            Console.SetCursorPosition(1, 1);   
+            // Should be next to Start Postion ** Note this is the last postion where cursor shown (Right on game start)
+            Console.SetCursorPosition(playerY,playerX);   
         }
 
         /// <summary>
@@ -228,13 +270,15 @@ namespace FinalProject
                 exitPointX = row - 1;
                 playerX = enterPointX +1;
                 playerY = enterPointY;
-                playerY = enterPointY;
             }
 
             // Mine (Can be anywhere on the map)
             // Check with "@"
             mineX = randomLocX.Next(1, row - 2);
             mineY = randomLocX.Next(1, col - 2);
+
+            chestX = randomLocX.Next(1, row - 2);
+            chestY = randomLocX.Next(1, col - 2);
         }
     }
 }
