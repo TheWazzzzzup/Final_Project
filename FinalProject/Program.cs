@@ -7,12 +7,10 @@ class Porgram
         // Console.ForegroundColor = ConsoleColor.Green;
 
         Console.ReadKey();
-        Random rnd = new Random();
-        var d = new string[rnd.Next(10,30),rnd.Next(30,110)];
+
         Maps map = new Maps();
-        map.CreateFrame(d);
-        map.PrintGame(d);
-        map.PlayerMovement(map.GetEntryY(),map.GetEntryX(),d);
+
+        map.LoadMap();
     }
 
 }

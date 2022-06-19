@@ -27,6 +27,8 @@ namespace FinalProject
         private int exitPointX;
         private int exitPointY;
 
+        private int currentLvl = 0;
+
         private bool _lvlClear = false;
         private bool _playerDead = false;
         private bool _enemyDead = false;
@@ -35,10 +37,15 @@ namespace FinalProject
         PlayerStats Wazzzzzup = new PlayerStats("Amit");
         EnemyGen enemy = new EnemyGen();
         //
-        
-        public void LoadGame(Random rnd,Random rnd1)
-        {
 
+        public void LoadMap()
+        {
+            currentLvl++;
+            Random rnd = new Random();
+            var map = new string[rnd.Next(10, 30), rnd.Next(30, 110)];
+            CreateFrame(map);
+            PrintGame(map);
+            PlayerMovement(GetEntryY(),GetEntryX(),map);
         }
 
         public int GetEntryX()
