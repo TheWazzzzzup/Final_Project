@@ -78,11 +78,18 @@ namespace FinalProject
 
         private void PlayerCheck(string[,] _map)
         {    
+            // Player Status Check
+            if (_playerDead)
+            {
+                Console.Clear();
+                Console.WriteLine("You Died");
+            }
             // Mine Check
             if (playerX == mineX && playerY == mineY && _mineTriggerd == false)
             {
                 // Play Sound (if you can)
                 _mineTriggerd = true;
+                GamePlayer.PlayerPara.GetDamage(9);
                 _map[mineX, mineY] = "*";
                 PrintGame(_map);
             }
