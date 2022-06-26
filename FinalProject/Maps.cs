@@ -44,11 +44,12 @@ namespace FinalProject
         //
         EnemyGen enemy;
         PlayerStats GamePlayer = new PlayerStats("Amit");
-        RewardSys chestReward; 
         //
 
         public void LoadMap()
         {
+            _chestEngaed = false;
+            _mineTriggerd = false;
             enemy = new EnemyGen();
             Random rnd = new Random();
             stepsTarget = rnd.Next(90, 150);
@@ -90,7 +91,7 @@ namespace FinalProject
             {
                 _chestEngaed = true;
                 _map[chestX, chestY] = "s";
-                RandomReward(GamePlayer,_map);
+                RandomReward(_map);
                 PrintGame(_map);
             }
             // Exit Check
@@ -214,8 +215,9 @@ namespace FinalProject
             Console.WriteLine($"Player HP: {GamePlayer.PlayerPara.GetHp()} Dead = {_playerDead}");
             Console.WriteLine($"{enemy.GetName()} HP: {enemy.enemyPara.GetHp()} Dead = {enemy.enemyPara.IsDead()}");
             // Debug
+            Console.WriteLine();
             Console.WriteLine($"Debug: Mine Loc is {mineX},{mineY}");
-            Console.WriteLine($"Debug: PlayerX {playerX} PlayerY{playerY}");
+            Console.WriteLine($"Debug: PlayerX {playerX} PlayerY {playerY},player damage {GamePlayer.PlayerPara.ShowDamage()} ,Max Hp {GamePlayer.PlayerPara.GetMaxHp()}");
             Console.WriteLine($"Debug: ExitX {exitPointX} ExitY {exitPointY}");
             Console.WriteLine(Console.GetCursorPosition());
 
@@ -319,7 +321,7 @@ namespace FinalProject
             chestY = randomLocX.Next(1, col - 2);
         }
     
-        private void RandomReward(PlayerStats player,string[,] map)
+        private void RandomReward(string[,] map)
         {
             Console.Clear();
             // Add door/chest opening sound
@@ -334,20 +336,19 @@ namespace FinalProject
             switch (x)
             {
                 case 1:
-                    player.PlayerPara.Heal(rnd.Next(5, 25));
-                    Console.Read();
+                    GamePlayer.PlayerPara.Heal(rnd.Next(5,25));
                     PrintGame(map);
                     break;
                 case 2:
-                    player.PlayerPara.DamageBoost(rnd.Next(2, 12));
+                    GamePlayer.PlayerPara.DamageBoost(rnd.Next(2,8));
                     PrintGame(map);
                     break;
                 case 3:
-                    Console.WriteLine("Enter Ulti");
+                    GamePlayer.PlayerPara.SummonUlti(enemy.enemyPara);
                     PrintGame(map);
                     break;
                 default:
-                    RandomReward(player,map);
+                    RandomReward(map);
                     break;
             }
         }

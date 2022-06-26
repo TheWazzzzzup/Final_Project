@@ -22,6 +22,11 @@ namespace FinalProject
         [DataMember]
         private int _coins = 0;
 
+        public PlayerStats(string name)
+        {
+            _name = name;
+        }
+
         public string GetName()
         {
             return _name;
@@ -33,11 +38,6 @@ namespace FinalProject
             {
                 Console.WriteLine($"{_name} you lost, HAHAHAHAHAHAHAHA");
             }
-        }
-
-        public PlayerStats(string name)
-        {
-            _name = name;
         }
 
         public int CoinBalance()

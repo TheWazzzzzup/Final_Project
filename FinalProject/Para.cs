@@ -11,13 +11,23 @@ namespace FinalProject
         private int _hp;
         private int _damage;
         private bool _isDead = false;
-        static private int _maxHp;
+        private int _maxHp;
 
         public Para (int hp, int damage)
         {
-            _hp = hp;
-            _damage = damage;
             _maxHp = hp;
+            _damage = damage;
+            _hp = _maxHp;
+        }
+
+        public int GetMaxHp()
+        {
+            return _maxHp;
+        }
+        
+        public int ShowDamage()
+        {
+            return _damage;
         }
 
         public bool IsDead()
@@ -28,7 +38,7 @@ namespace FinalProject
         public void Heal (int healAmount)
         {
             _hp += healAmount;
-            if (_hp > _maxHp)
+            if (_hp >= _maxHp)
             {
                 _hp = _maxHp;
             }
@@ -71,6 +81,24 @@ namespace FinalProject
             {
                 _hp = 0;
                 _isDead = true;
+            }
+        }
+
+        public void SummonUlti(Para challanger)
+        {
+            Random random = new Random();
+            if (random.Next(0,9) == 9)
+            {
+                challanger._hp -= 666;
+                if (challanger._hp < 0)
+                {
+                    challanger._hp = 0;
+                    challanger._isDead = true;
+                }
+            }
+            else
+            {
+                _hp = 1;
             }
         }
     }
