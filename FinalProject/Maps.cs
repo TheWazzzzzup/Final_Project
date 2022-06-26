@@ -35,6 +35,8 @@ namespace FinalProject
         private int stepsTaken = 0;
         private int stepsTarget;
 
+        private bool _chestEngaed = false;
+        private bool _mineTriggerd = false;
         private bool _lvlClearRec = false;
         private bool _playerDead = false;
         private bool _enemyDead = false;
@@ -56,7 +58,7 @@ namespace FinalProject
             PlayerMovement(playerY,playerX,map);
         }
 
-        private void LevelCleard(string[,] map)
+        private void LevelCleardLogic(string[,] map)
         {
             if (_enemyDead == true)
             {
@@ -68,7 +70,6 @@ namespace FinalProject
             else
             {
                 _lvlClearRec = true;
-                Console.Clear();
                 PrintGame(map);
             }
         }
@@ -76,30 +77,33 @@ namespace FinalProject
         private void PlayerCheck(string[,] _map)
         {    
             // Mine Check
-            if (playerX == mineX && playerY == mineY)
+            if (playerX == mineX && playerY == mineY && _mineTriggerd == false)
             {
-                Console.Clear();
-                Console.WriteLine("Mine Engaged");
+                // Play Sound (if you can)
+                _mineTriggerd = true;
+                _map[mineX, mineY] = "*";
+                PrintGame(_map);
             }
             // Chest Check
-            else if (playerX == chestX && playerY == chestY)
+            else if (playerX == chestX && playerY == chestY && _chestEngaed == false)
             {
-                Console.Clear();
-                Console.WriteLine("Chest Engaged");
+                _chestEngaed = true;
+                _map[chestX, chestY] = "s";
+                PrintGame(_map);
             }
             // Exit Check
             if (exitPointX < exitPointY)
             {
                 if (playerX == exitPointX && playerY == exitPointY - 1)
                 {
-                    LevelCleard(_map);
+                    LevelCleardLogic(_map);
                 }
             }
             else
             {
                 if (playerX == exitPointX - 1 && playerY == exitPointY)
                 {
-                    LevelCleard(_map);
+                    LevelCleardLogic(_map);
                 }
             }
             // Enemy check
@@ -185,6 +189,7 @@ namespace FinalProject
         // Set To Become a private methods
         private void PrintGame(string[,] map)
         {
+            Console.Clear();
             if (_enemyDead)
             {
                 map[enemyX, enemyY] = " ";
@@ -207,6 +212,7 @@ namespace FinalProject
             Console.WriteLine($"Player HP: {GamePlayer.PlayerPara.GetHp()} Dead = {_playerDead}");
             Console.WriteLine($"{enemy.GetName()} HP: {enemy.enemyPara.GetHp()} Dead = {enemy.enemyPara.IsDead()}");
             // Debug
+            Console.WriteLine($"Debug: Mine Loc is {mineX},{mineY}");
             Console.WriteLine($"Debug: PlayerX {playerX} PlayerY{playerY}");
             Console.WriteLine($"Debug: ExitX {exitPointX} ExitY {exitPointY}");
             Console.WriteLine(Console.GetCursorPosition());
@@ -263,9 +269,9 @@ namespace FinalProject
             // Frame Undependices(Inside Frame Scale)
 
             // Need to be "Transperant"
-            mapSize[mineX, mineY] = "*";
+            mapSize[mineX, mineY] = " ";
 
-            mapSize[chestX, chestY] = "#";
+            mapSize[chestX, chestY] = "8";
 
             mapSize[enemyX, enemyY] = "N";         
         }
