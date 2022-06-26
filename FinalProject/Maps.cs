@@ -44,6 +44,7 @@ namespace FinalProject
         //
         EnemyGen enemy;
         PlayerStats GamePlayer = new PlayerStats("Amit");
+        RewardSys chestReward; 
         //
 
         public void LoadMap()
@@ -89,6 +90,7 @@ namespace FinalProject
             {
                 _chestEngaed = true;
                 _map[chestX, chestY] = "s";
+                RandomReward(GamePlayer,_map);
                 PrintGame(_map);
             }
             // Exit Check
@@ -315,6 +317,39 @@ namespace FinalProject
 
             chestX = randomLocX.Next(1, row - 2);
             chestY = randomLocX.Next(1, col - 2);
+        }
+    
+        private void RandomReward(PlayerStats player,string[,] map)
+        {
+            Console.Clear();
+            // Add door/chest opening sound
+            Console.WriteLine("Please select your reward");
+            Console.WriteLine("1. Lucrative Potion");
+            Console.WriteLine("2. Random Buff");
+            Console.WriteLine("3. !Trustworthy Demon");
+
+            int x = int.Parse(Console.ReadLine());
+            Random rnd = new Random();
+
+            switch (x)
+            {
+                case 1:
+                    player.PlayerPara.Heal(rnd.Next(5, 25));
+                    Console.Read();
+                    PrintGame(map);
+                    break;
+                case 2:
+                    player.PlayerPara.DamageBoost(rnd.Next(2, 12));
+                    PrintGame(map);
+                    break;
+                case 3:
+                    Console.WriteLine("Enter Ulti");
+                    PrintGame(map);
+                    break;
+                default:
+                    RandomReward(player,map);
+                    break;
+            }
         }
     }
 }
