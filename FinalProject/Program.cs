@@ -6,7 +6,7 @@ class Porgram
         // Turns text color into selcted color
         // Console.ForegroundColor = ConsoleColor.Green;
 
-        Console.ReadKey();
+        Menus.StartGamePrompt();
 
         Maps map = new Maps();
 
@@ -23,8 +23,8 @@ class Porgram
 
 //The Project needs few things but i need to begin on stuff
 
-//1.Create 1st Level for testing
-//1.1.Walls need to be created in two catagories 1.unbreakable 2.breakable
+//1.Create 1st Level for testing +++
+//1.1.Walls need to be created in two catagories 1.unbreakable 2.breakable (too little time mayber skip that part)
 
 //2.Create a logic for player avatar +++
 
@@ -41,18 +41,20 @@ class Porgram
 //6.3.
 
 //7.Create Chest +++
-//7.1.chest will reward the player with the following (inc damage, inc hp, heal)
+//7.1.chest will reward the player with the following (inc damage, inc hp, heal) +++
 
-//8.Print game data in bottom of map
-//8.1. Contains: currentlvl, damage of player and enemy, treasure map interaction, traps.
+//8.Print game data in bottom of map 
+//8.1. Contains: currentlvl, damage of player and enemy, treasure map interaction, traps. 
 
-//9.Battle between player and enemy if the two are 1 tile apart(both will inflict and get damage)
+//9.Battle between player and enemy if the two are 1 tile apart(both will inflict and get damage) +++
+
 //Advance Ft.
-
 //1. Console Colors.
 //2. Progression.
 //3. healing poition
 //4. Hud
 //5. Options Menu
 //6. Save and Load system
+// Music (soundtrcks like chest opening)
+
 //7. (Keep an eye for anything extra you can only gain knowledge)

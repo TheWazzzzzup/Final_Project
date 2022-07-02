@@ -77,9 +77,10 @@ namespace FinalProject
         }
 
         private void PlayerCheck(string[,] _map)
-        {    
+        {
+            _playerDead = GamePlayer.PlayerPara.IsDead();
             // Player Status Check
-            if (_playerDead)
+            if (GamePlayer.PlayerPara.IsDead())
             {
                 Console.Clear();
                 Console.WriteLine("You Died");
@@ -212,15 +213,15 @@ namespace FinalProject
                 }
                 Console.WriteLine();
             }
-            // Cant Load next level before killing enemy
-            if (_lvlClearRec == true)
-            {
-                Console.WriteLine("Must Kill All Monster before clearing level");
-            }
-
             Console.WriteLine($"Current Lvl {currentLvl} Steps Taken {stepsTaken}");
             Console.WriteLine($"Player HP: {GamePlayer.PlayerPara.GetHp()} Dead = {_playerDead}");
             Console.WriteLine($"{enemy.GetName()} HP: {enemy.enemyPara.GetHp()} Dead = {enemy.enemyPara.IsDead()}");
+            // Cant Load next level before killing enemy
+            if (_lvlClearRec == true)
+            {
+                Menus.KillPrompt();
+            }
+
             // Debug
             Console.WriteLine();
             Console.WriteLine($"Debug: Mine Loc is {mineX},{mineY}");
@@ -228,6 +229,7 @@ namespace FinalProject
             Console.WriteLine($"Debug: ExitX {exitPointX} ExitY {exitPointY}");
             Console.WriteLine(Console.GetCursorPosition());
 
+            Menus.GameName();
             // Should be next to Start Postion ** Note this is the last postion where cursor shown (Right on game start)
             Console.SetCursorPosition(playerY,playerX);   
         }

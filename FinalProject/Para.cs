@@ -87,7 +87,7 @@ namespace FinalProject
         public void SummonUlti(Para challanger)
         {
             Random random = new Random();
-            if (random.Next(0,9) == 9)
+            if (random.Next(0,10) == 9)
             {
                 challanger._hp -= 666;
                 if (challanger._hp < 0)
