@@ -9,6 +9,11 @@ namespace FinalProject
 {
     class Maps
     {
+        // debug
+        int rowcheck;
+        int colcheck;
+
+
         // Player,Enemy,Mine,Chest,EntryPoint,ExitPoint
         private int playerX;
         private int playerY;
@@ -226,7 +231,7 @@ namespace FinalProject
             Console.WriteLine();
             Console.WriteLine($"Debug: Mine Loc is {mineX},{mineY}");
             Console.WriteLine($"Debug: PlayerX {playerX} PlayerY {playerY},player damage {GamePlayer.PlayerPara.ShowDamage()} ,Max Hp {GamePlayer.PlayerPara.GetMaxHp()}");
-            Console.WriteLine($"Debug: ExitX {exitPointX} ExitY {exitPointY}");
+            Console.WriteLine($"Debug: Row {rowcheck} Col {colcheck}");
             Console.WriteLine(Console.GetCursorPosition());
 
             Menus.GameName();
@@ -242,20 +247,44 @@ namespace FinalProject
         {            
             //row == y
             int row = mapSize.GetLength(0);
+            //debug
+            rowcheck = row;
 
             //col == x
             int col = mapSize.GetLength(1);
+            // debug
+            colcheck = col;
+
+            // Inner Wall/s Generation
+            Random rnd = new Random();
+            int roomRowLength = rnd.Next(4, row / 2);
+            int roomColLength = rnd.Next(5, col / 2);
+            int roomStartX = rnd.Next(2,(col - roomColLength) - 2);
+            int roomStartY = rnd.Next(2,(row - roomRowLength) - 2);
+
+
 
             for (int i = 0; i < row; i++)
             {
                 for (int j = 0; j < col; j++)
                 {
+                    // Outer Frame
                     if (j == 0 || j == col - 1)
                     {
-                        mapSize[i,j] = "|";
+                        mapSize[i, j] = "|";
                         continue;
                     }
                     else if (i == 0 || i == row - 1)
+                    {
+                        mapSize[i, j] = "-";
+                        continue;
+                    }
+                    else if ((j == roomStartX || j == roomStartX + roomColLength) && (i >= roomStartY && i <= roomStartY + roomRowLength))
+                    {
+                        mapSize[i, j] = "|";
+                        continue;
+                    }
+                    else if ((i == roomStartY || i == roomStartY + roomRowLength) && (j >= roomStartX && j <= roomStartX + roomColLength))
                     {
                         mapSize[i, j] = "-";
                         continue;
@@ -354,34 +383,6 @@ namespace FinalProject
                 default:
                     RandomReward(map);
                     break;
-            }
-        }
-
-        private void RoomBuilder(string [,] map,int row, int col)
-        {
-            Random rnd = new Random();
-            // Small
-            if (row < 20 && col < 60)
-            {
-                int roomSizeRow = rnd.Next(3, 8);
-                int roomSizeCol = rnd.Next(8, 20);
-                int RoomLocRow = rnd.Next(2, row -2);
-                int RoomLocCol = rnd.Next(2, col -2);
-                
-
-
-
-            }
-
-            // Big
-            else
-            {
-                int roomSizeRow = rnd.Next(5, 13);
-                int roomSizeCol = rnd.Next(15, 30);
-                int RoomLocRow = rnd.Next(2, row - 2);
-                int RoomLocCol = rnd.Next(2, col - 2);
-
-
             }
         }
 
