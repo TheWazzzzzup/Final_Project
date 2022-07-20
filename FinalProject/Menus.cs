@@ -49,10 +49,10 @@ namespace FinalProject
         public static void Fluff()
         {
             Console.Clear();
-            Console.WriteLine("      (_    ,_,    _)");
-            Console.WriteLine(@"      / `'--) (--'` \");
-            Console.WriteLine(@"     /  _,-'\_/'-,_  \");
-            Console.Write(@"    /.-'     ""     '-.\");
+            Console.WriteLine("         (_    ,_,    _)");
+            Console.WriteLine(@"         / `'--) (--'` \");
+            Console.WriteLine(@"        /  _,-'\_/'-,_  \");
+            Console.Write(@"       /.-'     ""     '-.\");
             Console.ReadKey();
             GameName();
             Console.ReadKey();

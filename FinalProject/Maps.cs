@@ -28,7 +28,7 @@ namespace FinalProject
         private int exitPointX;
         private int exitPointY;
 
-        private int currentLvl = 0;
+        public int currentLvl = 0;
 
         // Random number of steps will make the Console clear and show mine location for limited time // Date time, time Span
         System.Timers.Timer amit = new System.Timers.Timer(1000);
@@ -267,11 +267,6 @@ namespace FinalProject
                     }
                 }
             }
-            // Small Map: Add Small Map Logic
-            if (row < 20 && col < 60)
-            {
-
-            }
 
             EntityGenerator(row, col);
 
@@ -361,6 +356,35 @@ namespace FinalProject
                     break;
             }
         }
+
+        private void RoomBuilder(string [,] map,int row, int col)
+        {
+            Random rnd = new Random();
+            // Small
+            if (row < 20 && col < 60)
+            {
+                int roomSizeRow = rnd.Next(3, 8);
+                int roomSizeCol = rnd.Next(8, 20);
+                int RoomLocRow = rnd.Next(2, row -2);
+                int RoomLocCol = rnd.Next(2, col -2);
+                
+
+
+
+            }
+
+            // Big
+            else
+            {
+                int roomSizeRow = rnd.Next(5, 13);
+                int roomSizeCol = rnd.Next(15, 30);
+                int RoomLocRow = rnd.Next(2, row - 2);
+                int RoomLocCol = rnd.Next(2, col - 2);
+
+
+            }
+        }
+
     }
 }
 
