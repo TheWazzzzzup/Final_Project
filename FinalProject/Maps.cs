@@ -160,16 +160,16 @@ namespace FinalProject
             SetXY(row, col);
 
             // Right
-            if (currentPress.Key == ConsoleKey.D && row < mapLength - 2)
+            if ((currentPress.Key == ConsoleKey.D && row < mapLength - 2) && map[playerX,playerY + 1] != "|")
             {
                 row++;
                 stepsTaken++;
                 Console.SetCursorPosition(row, col);
                 SetXY(row, col);
-                PlayerMovement(row, col,map);
+                PlayerMovement(row,col,map);
             }
             // Left
-            if (currentPress.Key == ConsoleKey.A && row > 1)
+            if ((currentPress.Key == ConsoleKey.A && row > 1) && map[playerX, playerY - 1] != "|")
             {
                 row--;
                 stepsTaken++;
@@ -177,8 +177,8 @@ namespace FinalProject
                 SetXY(row, col);
                 PlayerMovement(row, col, map);
             }
-            //Up
-            if (currentPress.Key == ConsoleKey.W && col > 1)
+            // Up
+            if ((currentPress.Key == ConsoleKey.W && col > 1) && map[playerX - 1,playerY] != "-" && map[playerX - 1, playerY] != "|")
             {
                 col--;
                 stepsTaken++;
@@ -186,8 +186,8 @@ namespace FinalProject
                 SetXY(row, col);
                 PlayerMovement(row, col, map); 
             }
-            //Down
-            if (currentPress.Key == ConsoleKey.S && col < mapHieght - 2)
+            // Down
+            if ((currentPress.Key == ConsoleKey.S && col < mapHieght - 2) && map[playerX + 1, playerY] != "-" && map[playerX + 1, playerY] != "|")
             {
                 col++;
                 stepsTaken++;
