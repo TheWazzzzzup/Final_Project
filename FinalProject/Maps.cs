@@ -263,7 +263,6 @@ namespace FinalProject
             int roomStartY = rnd.Next(2,(row - roomRowLength) - 2);
 
 
-
             for (int i = 0; i < row; i++)
             {
                 for (int j = 0; j < col; j++)
@@ -279,6 +278,7 @@ namespace FinalProject
                         mapSize[i, j] = "-";
                         continue;
                     }
+                    // Inner Room
                     else if ((j == roomStartX || j == roomStartX + roomColLength) && (i >= roomStartY && i <= roomStartY + roomRowLength))
                     {
                         mapSize[i, j] = "|";
@@ -289,6 +289,7 @@ namespace FinalProject
                         mapSize[i, j] = "-";
                         continue;
                     }
+                    // Filler
                     else
                     {
                         mapSize[i,j] = " ";
@@ -297,7 +298,7 @@ namespace FinalProject
                 }
             }
 
-            EntityGenerator(row, col);
+            EntityGeneratorAndCheck(mapSize,row, col);
 
             // Frame Undependices(On Frame Scale) 
             mapSize[enterPointX, enterPointY] = "E";
@@ -319,11 +320,12 @@ namespace FinalProject
             playerY = row;
         }
 
-        private void EntityGenerator(int row,int col)
+        private void EntityGeneratorAndCheck(string[,] map,int row,int col)
         {
+            // Entery and Exit Start Point , Overrides Current Wall "String"
             Random randomLocX = new Random();
             Random randomLocY = new Random();
-            // Entery and Exit Start Point
+            
             if (randomLocX.Next(0,2) > 0)
             {
                 // Left Right
@@ -345,13 +347,21 @@ namespace FinalProject
                 playerY = enterPointY;
             }
 
-            // Mine (Can be anywhere on the map)
-            // Check with "@"
-            mineX = randomLocX.Next(1, row - 2);
-            mineY = randomLocX.Next(1, col - 2);
+            // Checks that random spawn point is available
+            int checker = 0;
+            while (checker == 0)
+            {
+                mineX = randomLocX.Next(1, row - 2);
+                mineY = randomLocX.Next(1, col - 2);
 
-            chestX = randomLocX.Next(1, row - 2);
-            chestY = randomLocX.Next(1, col - 2);
+                chestX = randomLocX.Next(1, row - 2);
+                chestY = randomLocX.Next(1, col - 2);
+
+                if ((map[mineX,mineY] == " ") && (map[chestX,chestY] == " "))
+                {
+                    checker = 1;
+                }
+            }
         }
     
         private void RandomReward(string[,] map)
