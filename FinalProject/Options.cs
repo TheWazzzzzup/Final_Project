@@ -6,38 +6,55 @@ using System.Threading.Tasks;
 
 namespace FinalProject
 {
-    class Options
+    public class Options
     {
-        private enum _enemy
+
+        public string _chosenAvater = "☺";
+        public string _chosenEnemyAvater = "♠";
+        public string _chosenGender = "♂";
+        public string _chosenName = "Alejandro";
+        public int _chosenDifficulty = 1;
+        
+        
+
+        public string[] _options = {"Character","Character Name", "Difficulty","Enemy","Gender","Exit and Save"};
+        public string[] _playerAva = { "☺", "☻", "♫", "♦"};
+        public string[] _difficulty = { "Easy", "Medium", "Hard"};
+        public string[] _enemyAva = { "♠", "☼", "†", "©" };
+        public string[] _gender = { "♂", "♀" };
+        public string[] _name = { "Back"};
+
+        public Options()
         {
-            Spade, // ♠
-            Sun, // ☼
-            Jesus, // †
-            Copyright, // ©
-        };
-        private enum _enemyColor
-        {
-            Red,
-            darkGreen,
-            Magenta
-        }
-        private enum _gender
-        {
-            Male,
-            Female
-        };
-        private enum _difficulty
-        {
-            Noraml,
-            Meduim,
-            Hard,
+
         }
 
-        private string _playerS;
-        private string _enemyS;
-        private string _enemyColorS;
-        private string _genderS;
+        public void SetPlayerAvatar(string avatar)
+        {
+            _chosenAvater = avatar;
+        }
 
+        public void SetEnemyAvatar(string avatar)
+        {
+            _chosenEnemyAvater = avatar;
+        }
 
+        public void SetDifficulty(int diff)
+        {
+            _chosenDifficulty = diff;
+        }
+
+        public void SetGender(string avatar)
+        {
+            _chosenGender = avatar;
+        }
+
+        public void SetName(string name)
+        {
+            _chosenName = name;
+        }
+    
+    
     }
+
 }

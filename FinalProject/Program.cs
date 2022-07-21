@@ -3,16 +3,21 @@ class Porgram
 {
     public static void Main(string[] args)
     {
-        // Turns text color into selcted color
-        // Console.ForegroundColor = ConsoleColor.Green
+        Maps newMap= new Maps();
+        Menus gameMenu = new Menus(newMap);
+        gameMenu.MainMenu();
 
-        Prompts.StartGamePrompt();
 
-        Maps map = new Maps();
 
-        map.LoadMap();
+        //// Turns text color into selcted color
+        //// Console.ForegroundColor = ConsoleColor.Green
+
+        //Prompts.StartGamePrompt();
+
+        //Maps map = new Maps();
+
+        //map.LoadMap();
     }
-
 }
 // Note The X and Y Values You Made Are Oppsite Of (Visual Studio > Console. Defulat)
 
