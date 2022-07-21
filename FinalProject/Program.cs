@@ -6,7 +6,7 @@ class Porgram
         // Turns text color into selcted color
         // Console.ForegroundColor = ConsoleColor.Green;
 
-        Menus.StartGamePrompt();
+        Prompts.StartGamePrompt();
 
         Maps map = new Maps();
 

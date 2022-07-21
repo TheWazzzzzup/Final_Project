@@ -83,7 +83,7 @@ namespace FinalProject
             // Player Status Check
             if (GamePlayer.PlayerPara.IsDead())
             {
-                Menus.PlayerDied();
+                Prompts.PlayerDiedPrompt();
             }
             // Mine Check
             if (playerX == mineX && playerY == mineY && _mineTriggerd == false)
@@ -206,7 +206,42 @@ namespace FinalProject
             {
                 for (int j = 0; j < map.GetLength(1); j++)
                 {
-                    Console.Write(map[i, j]);
+                    switch (map[i, j])
+                    {
+                        case "N":
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write(map[i, j]);
+                            Console.ForegroundColor = ConsoleColor.White;
+                            break;
+                        case "8":
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.Write(map[i, j]);
+                            Console.ForegroundColor = ConsoleColor.White;
+                            break;
+                        case "s":
+                            Console.ForegroundColor = ConsoleColor.DarkYellow;
+                            Console.Write(map[i, j]);
+                            Console.ForegroundColor = ConsoleColor.White;
+                            break;
+                        case "*":
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write(map[i, j]);
+                            Console.ForegroundColor = ConsoleColor.White;
+                            break;
+                        case "X":
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write(map[i, j]);
+                            Console.ForegroundColor = ConsoleColor.White;
+                            break;
+                        case "E":
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.Write(map[i, j]);
+                            Console.ForegroundColor = ConsoleColor.White;
+                            break;
+                        default:
+                            Console.Write(map[i, j]);
+                            break;
+                    }
                 }
                 Console.WriteLine();
             }
@@ -216,7 +251,7 @@ namespace FinalProject
             // Cant Load next level before killing enemy
             if (_lvlClearRec == true)
             {
-                Menus.ClearRoomPrompt();
+                Prompts.ClearRoomPrompt();
             }
 
             // Debug
@@ -227,7 +262,7 @@ namespace FinalProject
             Console.WriteLine($"Debug: enemy Damage {enemy.enemyPara.ShowDamage()}");
             Console.WriteLine(Console.GetCursorPosition());
 
-            Menus.GameName();
+            Prompts.GameNamePrompt();
             // Should be next to Start Postion ** Note this is the last postion where cursor shown (Right on game start)
             Console.SetCursorPosition(playerY,playerX);   
         }

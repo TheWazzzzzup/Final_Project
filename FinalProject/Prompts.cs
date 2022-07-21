@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace FinalProject
 {
-    static class Menus
+    static class Prompts
     {
-        public static void GameName()
+        public static void GameNamePrompt()
         {
             Console.WriteLine(@"
  _______   ______   ______    __        ______     ______ .___________. __    ______   .__   __. 
@@ -43,10 +43,10 @@ namespace FinalProject
             Console.WriteLine(" - - - - - - - - - - - - - - - - - -");
             Console.WriteLine("Press Enter To Start Playing");
             Console.ReadKey();
-            BatFluff();
+            BatFluffPrompt();
         }
 
-        public static void BatFluff()
+        public static void BatFluffPrompt()
         {
             Console.Clear();
             Console.WriteLine("         (_    ,_,    _)");
@@ -54,11 +54,11 @@ namespace FinalProject
             Console.WriteLine(@"        /  _,-'\_/'-,_  \");
             Console.Write(@"       /.-'     ""     '-.\");
             Console.ReadKey();
-            GameName();
+            GameNamePrompt();
             Console.ReadKey();
         }
 
-        public static void PlayerDied()
+        public static void PlayerDiedPrompt()
         {
             Console.Clear();
             Console.WriteLine(@"                                                          ▄▄  
@@ -74,8 +74,6 @@ namespace FinalProject
 ");
 
         }
-
-
 
     }
 }

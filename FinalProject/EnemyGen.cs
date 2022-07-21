@@ -31,7 +31,12 @@ namespace FinalProject
             string drawName = EnemyName[rnd.Next(0,EnemyName.Length)];
             _name = drawName;
             _damage = (int)(EnemyNameDamage[drawName] * (map.currentLvl * 0.2f + 1));
-            enemyPara = new Para(20,_damage);
+            int hp = _damage * 3;
+            if (hp <= 0)
+            {
+                hp = map.currentLvl * 3;
+            }
+            enemyPara = new Para(hp, _damage);
         }
         // Name has to be Bat related
 
