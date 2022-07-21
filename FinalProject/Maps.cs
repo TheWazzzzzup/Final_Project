@@ -261,7 +261,7 @@ namespace FinalProject
             int roomColLength = rnd.Next(5, col / 2);
             int roomStartX = rnd.Next(2,(col - roomColLength) - 2);
             int roomStartY = rnd.Next(2,(row - roomRowLength) - 2);
-
+            int roomDoor = rnd.Next(1,roomColLength);
 
             for (int i = 0; i < row; i++)
             {
@@ -284,7 +284,7 @@ namespace FinalProject
                         mapSize[i, j] = "|";
                         continue;
                     }
-                    else if ((i == roomStartY || i == roomStartY + roomRowLength) && (j >= roomStartX && j <= roomStartX + roomColLength))
+                    else if ((i == roomStartY || i == roomStartY + roomRowLength) && (j >= roomStartX && j <= roomStartX + roomColLength) && j != roomDoor+roomStartX)
                     {
                         mapSize[i, j] = "-";
                         continue;
