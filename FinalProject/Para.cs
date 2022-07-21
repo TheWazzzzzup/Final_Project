@@ -49,6 +49,11 @@ namespace FinalProject
             return _hp;
         }
 
+        public void IncreaseMaxHp(int maxHpBoostVaule)
+        {
+            _maxHp += maxHpBoostVaule;
+        }
+
         public void DamageBoost(int boostValue)
         {
             _damage += boostValue;

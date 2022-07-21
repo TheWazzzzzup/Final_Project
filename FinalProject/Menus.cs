@@ -22,7 +22,7 @@ namespace FinalProject
 ");
         }
 
-        public static void KillPrompt()
+        public static void ClearRoomPrompt()
         {
             Console.WriteLine(@"
 
@@ -43,10 +43,10 @@ namespace FinalProject
             Console.WriteLine(" - - - - - - - - - - - - - - - - - -");
             Console.WriteLine("Press Enter To Start Playing");
             Console.ReadKey();
-            Fluff();
+            BatFluff();
         }
 
-        public static void Fluff()
+        public static void BatFluff()
         {
             Console.Clear();
             Console.WriteLine("         (_    ,_,    _)");
@@ -57,5 +57,25 @@ namespace FinalProject
             GameName();
             Console.ReadKey();
         }
+
+        public static void PlayerDied()
+        {
+            Console.Clear();
+            Console.WriteLine(@"                                                          ▄▄  
+▀████▀     █     ▀███▀                ██                ▀███  
+  ▀██     ▄██     ▄█                  ██                  ██  
+   ██▄   ▄███▄   ▄█   ▄█▀██▄  ▄██▀████████  ▄▄█▀██   ▄█▀▀███  
+    ██▄  █▀ ██▄  █▀  ██   ██  ██   ▀▀ ██   ▄█▀   ██▄██    ██  
+    ▀██ █▀  ▀██ █▀    ▄█████  ▀█████▄ ██   ██▀▀▀▀▀▀███    ██  
+     ▄██▄    ▄██▄    ██   ██  █▄   ██ ██   ██▄    ▄▀██    ██  
+      ██      ██     ▀████▀██▄██████▀ ▀████ ▀█████▀ ▀████▀███▄
+                                                              
+                                                              
+");
+
+        }
+
+
+
     }
 }

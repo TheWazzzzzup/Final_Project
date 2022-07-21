@@ -40,22 +40,20 @@ namespace FinalProject
         private int stepsTaken = 0;
         private int stepsTarget;
 
-        private bool _chestEngaed = false;
         private bool _mineTriggerd = false;
         private bool _lvlClearRec = false;
-        private bool _playerDead = false;
-        private bool _enemyDead = false;
 
         //
+        ChestLog chest;
         EnemyGen enemy;
         PlayerStats GamePlayer = new PlayerStats("Amit");
         //
 
         public void LoadMap()
         {
-            _chestEngaed = false;
             _mineTriggerd = false;
-            enemy = new EnemyGen();
+            enemy = new EnemyGen(this);
+            chest = new ChestLog(GamePlayer);
             Random rnd = new Random();
             stepsTarget = rnd.Next(90, 150);
             var map = new string[rnd.Next(10, 30), rnd.Next(30, 110)];
@@ -67,11 +65,10 @@ namespace FinalProject
 
         private void LevelCleardLogic(string[,] map)
         {
-            if (_enemyDead == true)
+            if (enemy.enemyPara.IsDead() == true)
             {
                 Console.Clear();
                 _lvlClearRec = false;
-                _enemyDead = false;
                 LoadMap();
             }
             else
@@ -83,12 +80,10 @@ namespace FinalProject
 
         private void PlayerCheck(string[,] _map)
         {
-            _playerDead = GamePlayer.PlayerPara.IsDead();
             // Player Status Check
             if (GamePlayer.PlayerPara.IsDead())
             {
-                Console.Clear();
-                Console.WriteLine("You Died");
+                Menus.PlayerDied();
             }
             // Mine Check
             if (playerX == mineX && playerY == mineY && _mineTriggerd == false)
@@ -100,11 +95,11 @@ namespace FinalProject
                 PrintGame(_map);
             }
             // Chest Check
-            else if (playerX == chestX && playerY == chestY && _chestEngaed == false)
+            else if (playerX == chestX && playerY == chestY && chest.ChestOpend() == false)
             {
-                _chestEngaed = true;
+                chest.ChestEncounter();
                 _map[chestX, chestY] = "s";
-                RandomReward(_map);
+                Console.Clear();
                 PrintGame(_map);
             }
             // Exit Check
@@ -134,13 +129,11 @@ namespace FinalProject
                 {
                     if (boxCollider[0, i] == playerX && boxCollider[1, j] == playerY)
                     {
-                        if (_playerDead == false && _enemyDead ==  false)
+                        if (GamePlayer.PlayerPara.IsDead() == false && enemy.enemyPara.IsDead() ==  false)
                         {
                             // OnCollisonEnter""
                             GamePlayer.PlayerPara.InflictDamage(enemy.enemyPara);
                             GamePlayer.PlayerPara.GetDamage(enemy.enemyPara);
-                            _playerDead = GamePlayer.PlayerPara.IsDead();
-                            _enemyDead = enemy.enemyPara.IsDead();
                             Console.Clear();
                             PrintGame(_map);
                         }
@@ -202,11 +195,10 @@ namespace FinalProject
             }
         }
 
-        // Set To Become a private methods
         private void PrintGame(string[,] map)
         {
             Console.Clear();
-            if (_enemyDead)
+            if (enemy.enemyPara.IsDead())
             {
                 map[enemyX, enemyY] = " ";
             }
@@ -218,13 +210,13 @@ namespace FinalProject
                 }
                 Console.WriteLine();
             }
-            Console.WriteLine($"Current Lvl {currentLvl} Steps Taken {stepsTaken}");
-            Console.WriteLine($"Player HP: {GamePlayer.PlayerPara.GetHp()} Dead = {_playerDead}");
+            Console.WriteLine($"Current Lvl {currentLvl}, Player HP: {GamePlayer.PlayerPara.GetHp()} Dead = {GamePlayer.PlayerPara.IsDead()}"); // place holder
+            Console.WriteLine(chest.ChestOutput());
             Console.WriteLine($"{enemy.GetName()} HP: {enemy.enemyPara.GetHp()} Dead = {enemy.enemyPara.IsDead()}");
             // Cant Load next level before killing enemy
             if (_lvlClearRec == true)
             {
-                Menus.KillPrompt();
+                Menus.ClearRoomPrompt();
             }
 
             // Debug
@@ -232,6 +224,7 @@ namespace FinalProject
             Console.WriteLine($"Debug: Mine Loc is {mineX},{mineY}");
             Console.WriteLine($"Debug: PlayerX {playerX} PlayerY {playerY},player damage {GamePlayer.PlayerPara.ShowDamage()} ,Max Hp {GamePlayer.PlayerPara.GetMaxHp()}");
             Console.WriteLine($"Debug: Row {rowcheck} Col {colcheck}");
+            Console.WriteLine($"Debug: enemy Damage {enemy.enemyPara.ShowDamage()}");
             Console.WriteLine(Console.GetCursorPosition());
 
             Menus.GameName();
@@ -298,7 +291,7 @@ namespace FinalProject
                 }
             }
 
-            EntityGeneratorAndCheck(mapSize,row, col);
+            EntityGenerator(mapSize,row, col);
 
             // Frame Undependices(On Frame Scale) 
             mapSize[enterPointX, enterPointY] = "E";
@@ -320,7 +313,7 @@ namespace FinalProject
             playerY = row;
         }
 
-        private void EntityGeneratorAndCheck(string[,] map,int row,int col)
+        private void EntityGenerator(string[,] map,int row,int col)
         {
             // Entery and Exit Start Point , Overrides Current Wall "String"
             Random randomLocX = new Random();
@@ -363,43 +356,10 @@ namespace FinalProject
                 }
             }
         }
-    
-        private void RandomReward(string[,] map)
-        {
-            Console.Clear();
-            // Add door/chest opening sound
-            Console.WriteLine("Please select your reward");
-            Console.WriteLine("1. Lucrative Potion");
-            Console.WriteLine("2. Random Buff");
-            Console.WriteLine("3. !Trustworthy Demon");
-
-            int x = int.Parse(Console.ReadLine());
-            Random rnd = new Random();
-
-            switch (x)
-            {
-                case 1:
-                    GamePlayer.PlayerPara.Heal(rnd.Next(5,25));
-                    PrintGame(map);
-                    break;
-                case 2:
-                    GamePlayer.PlayerPara.DamageBoost(rnd.Next(2,8));
-                    PrintGame(map);
-                    break;
-                case 3:
-                    GamePlayer.PlayerPara.SummonUlti(enemy.enemyPara);
-                    PrintGame(map);
-                    break;
-                default:
-                    RandomReward(map);
-                    break;
-            }
-        }
-
     }
 }
 
 // Contatins Map Logic And Map Generator.
-// Should Contain Mine and Chest Data.
+// Should Contain Mine and Chest Data. Maybe not? and get them a class?
 //
 

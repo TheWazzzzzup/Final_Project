@@ -25,12 +25,12 @@ namespace FinalProject
             {"Ladybug",3}
         };
 
-        public EnemyGen()
+        public EnemyGen(Maps map)
         {
             Random rnd = new Random();
             string drawName = EnemyName[rnd.Next(0,EnemyName.Length)];
             _name = drawName;
-            _damage = EnemyNameDamage[drawName];
+            _damage = (int)(EnemyNameDamage[drawName] * (map.currentLvl * 0.2f + 1));
             enemyPara = new Para(20,_damage);
         }
         // Name has to be Bat related
