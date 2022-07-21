@@ -8,13 +8,6 @@ namespace FinalProject
 {
     class Options
     {
-        private enum _player
-        {
-            WhiteSmile, // ☺
-            BlackSmile, // ☻
-            Note, // ♫
-            Dimoand, // ♦
-        };
         private enum _enemy
         {
             Spade, // ♠

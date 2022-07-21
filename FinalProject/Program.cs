@@ -4,7 +4,7 @@ class Porgram
     public static void Main(string[] args)
     {
         // Turns text color into selcted color
-        // Console.ForegroundColor = ConsoleColor.Green;
+        // Console.ForegroundColor = ConsoleColor.Green
 
         Prompts.StartGamePrompt();
 
