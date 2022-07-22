@@ -16,10 +16,8 @@ namespace FinalProject
     {
         public Para PlayerPara = new Para(100,7);
 
-        [DataMember]
         private string _name;
 
-        [DataMember]
         private int _coins = 0;
 
         public PlayerStats(string name)
@@ -32,26 +30,5 @@ namespace FinalProject
             return _name;
         }
 
-        public void IsPlayerDead()
-        {
-            if (PlayerPara.IsDead() == true)
-            {
-                Console.WriteLine($"{_name} you lost, HAHAHAHAHAHAHAHA");
-            }
-        }
-
-        public int CoinBalance()
-        {
-            return _coins;  
-        }
-
-        /// <summary>
-        /// Accept a value 5 for coin addition and -5 for coin reduction
-        /// </summary>
-        /// <param name="newCoinValue"></param>
-        public void CoinManager(int newCoinValue)
-        {
-            _coins += newCoinValue;
-        }
     }
 }

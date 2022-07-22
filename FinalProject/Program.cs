@@ -3,7 +3,8 @@ class Porgram
 {
     public static void Main(string[] args)
     {
-        Maps newMap= new Maps();
+        Options options = new Options();
+        Maps newMap= new Maps(options);
         Menus gameMenu = new Menus(newMap);
         gameMenu.MainMenu();
 

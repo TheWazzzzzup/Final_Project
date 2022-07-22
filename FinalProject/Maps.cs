@@ -44,16 +44,23 @@ namespace FinalProject
         private bool _lvlClearRec = false;
 
         //
-        ChestLog chest;
-        EnemyGen enemy;
-        PlayerStats GamePlayer = new PlayerStats("Amit");
+        ChestLog _chest;
+        EnemyGen _enemy;
+        PlayerStats _currentPlayer;
+        Options _playerOptions;
         //
+
+        public Maps(Options playerOptions)
+        {
+            _playerOptions = playerOptions;
+            _currentPlayer = new PlayerStats(_playerOptions._chosenName);
+        }
 
         public void LoadMap()
         {
             _mineTriggerd = false;
-            enemy = new EnemyGen(this);
-            chest = new ChestLog(GamePlayer);
+            _enemy = new EnemyGen(this);
+            _chest = new ChestLog(_currentPlayer);
             Random rnd = new Random();
             stepsTarget = rnd.Next(90, 150);
             var map = new string[rnd.Next(10, 30), rnd.Next(30, 110)];
@@ -65,7 +72,7 @@ namespace FinalProject
 
         private void LevelCleardLogic(string[,] map)
         {
-            if (enemy.enemyPara.IsDead() == true)
+            if (_enemy.enemyPara.IsDead() == true)
             {
                 Console.Clear();
                 _lvlClearRec = false;
@@ -81,7 +88,7 @@ namespace FinalProject
         private void PlayerCheck(string[,] _map)
         {
             // Player Status Check
-            if (GamePlayer.PlayerPara.IsDead())
+            if (_currentPlayer.PlayerPara.IsDead())
             {
                 Prompts.PlayerDiedPrompt();
             }
@@ -90,14 +97,14 @@ namespace FinalProject
             {
                 // Play Sound (if you can)
                 _mineTriggerd = true;
-                GamePlayer.PlayerPara.GetDamage(9);
+                _currentPlayer.PlayerPara.GetDamage(9);
                 _map[mineX, mineY] = "*";
                 PrintGame(_map);
             }
             // Chest Check
-            else if (playerX == chestX && playerY == chestY && chest.ChestOpend() == false)
+            else if (playerX == chestX && playerY == chestY && _chest.ChestOpend() == false)
             {
-                chest.ChestEncounter();
+                _chest.ChestEncounter();
                 _map[chestX, chestY] = "s";
                 Console.Clear();
                 PrintGame(_map);
@@ -129,11 +136,11 @@ namespace FinalProject
                 {
                     if (boxCollider[0, i] == playerX && boxCollider[1, j] == playerY)
                     {
-                        if (GamePlayer.PlayerPara.IsDead() == false && enemy.enemyPara.IsDead() ==  false)
+                        if (_currentPlayer.PlayerPara.IsDead() == false && _enemy.enemyPara.IsDead() ==  false)
                         {
                             // OnCollisonEnter""
-                            GamePlayer.PlayerPara.InflictDamage(enemy.enemyPara);
-                            GamePlayer.PlayerPara.GetDamage(enemy.enemyPara);
+                            _currentPlayer.PlayerPara.InflictDamage(_enemy.enemyPara);
+                            _currentPlayer.PlayerPara.GetDamage(_enemy.enemyPara);
                             Console.Clear();
                             PrintGame(_map);
                         }
@@ -198,7 +205,7 @@ namespace FinalProject
         private void PrintGame(string[,] map)
         {
             Console.Clear();
-            if (enemy.enemyPara.IsDead())
+            if (_enemy.enemyPara.IsDead())
             {
                 map[enemyX, enemyY] = " ";
             }
@@ -208,6 +215,7 @@ namespace FinalProject
                 {
                     switch (map[i, j])
                     {
+                        // Fix N Shit
                         case "N":
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.Write(map[i, j]);
@@ -245,9 +253,9 @@ namespace FinalProject
                 }
                 Console.WriteLine();
             }
-            Console.WriteLine($"Current Lvl {currentLvl}, Player HP: {GamePlayer.PlayerPara.GetHp()} Dead = {GamePlayer.PlayerPara.IsDead()}"); // place holder
-            Console.WriteLine(chest.ChestOutput());
-            Console.WriteLine($"{enemy.GetName()} HP: {enemy.enemyPara.GetHp()} Dead = {enemy.enemyPara.IsDead()}");
+            Console.WriteLine($"Current Lvl {currentLvl}, Player HP: {_currentPlayer.PlayerPara.GetHp()} Dead = {_currentPlayer.PlayerPara.IsDead()}"); // place holder
+            Console.WriteLine(_chest.ChestOutput());
+            Console.WriteLine($"{_enemy.GetName()} HP: {_enemy.enemyPara.GetHp()} Dead = {_enemy.enemyPara.IsDead()}");
             // Cant Load next level before killing enemy
             if (_lvlClearRec == true)
             {
@@ -257,9 +265,9 @@ namespace FinalProject
             // Debug
             Console.WriteLine();
             Console.WriteLine($"Debug: Mine Loc is {mineX},{mineY}");
-            Console.WriteLine($"Debug: PlayerX {playerX} PlayerY {playerY},player damage {GamePlayer.PlayerPara.ShowDamage()} ,Max Hp {GamePlayer.PlayerPara.GetMaxHp()}");
+            Console.WriteLine($"Debug: PlayerX {playerX} PlayerY {playerY},player damage {_currentPlayer.PlayerPara.ShowDamage()} ,Max Hp {_currentPlayer.PlayerPara.GetMaxHp()}");
             Console.WriteLine($"Debug: Row {rowcheck} Col {colcheck}");
-            Console.WriteLine($"Debug: enemy Damage {enemy.enemyPara.ShowDamage()}");
+            Console.WriteLine($"Debug: enemy Damage {_enemy.enemyPara.ShowDamage()}");
             Console.WriteLine(Console.GetCursorPosition());
 
             Prompts.GameNamePrompt();
