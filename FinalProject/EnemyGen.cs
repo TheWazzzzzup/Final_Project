@@ -8,29 +8,26 @@ namespace FinalProject
 {
     class EnemyGen
     {
+        
         public Para enemyPara;
 
+        private Options _options;
+
         private int _damage;
+
         private string _name;
+        private string _enemyAvatar;
 
         private string[] EnemyName = {"Bat","Crow","Leaf","Ladybug","Scorpion","Toad"};
 
-        private Dictionary<string, int> EnemyNameDamage = new Dictionary<string, int>()
-        {
-            {"Bat",7},
-            {"Crow",15},
-            {"Leaf",0},
-            {"Scorpion",6},
-            {"Toad",5},
-            {"Ladybug",3}
-        };
-
-        public EnemyGen(Maps map)
+        public EnemyGen(Maps map, Options option)
         {
             Random rnd = new Random();
-            string drawName = EnemyName[rnd.Next(0,EnemyName.Length)];
+            string drawName = EnemyName[rnd.Next(0, EnemyName.Length)];
             _name = drawName;
-            _damage = (int)(EnemyNameDamage[drawName] * (map.currentLvl * 0.2f + 1));
+            _options = option;
+            _enemyAvatar = _options._chosenEnemyAvater;
+            _damage = (int)(EnemyNameDamage[drawName] * ((map.currentLvl * 0.2f + 1) * _options._chosenDifficulty));
             int hp = _damage * 3;
             if (hp <= 0)
             {
@@ -38,7 +35,6 @@ namespace FinalProject
             }
             enemyPara = new Para(hp, _damage);
         }
-        // Name has to be Bat related
 
         public string GetName()
         {
@@ -50,5 +46,19 @@ namespace FinalProject
             return _damage;
         }
 
+        public string GetEnemyAvatar()
+        {
+            return _enemyAvatar;
+        }
+
+        private Dictionary<string, int> EnemyNameDamage = new Dictionary<string, int>()
+        {
+            {"Bat",7},
+            {"Crow",15},
+            {"Leaf",0},
+            {"Scorpion",6},
+            {"Toad",5},
+            {"Ladybug",3}
+        };
     }
 }

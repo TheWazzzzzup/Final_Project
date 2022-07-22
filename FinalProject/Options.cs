@@ -13,9 +13,8 @@ namespace FinalProject
         public string _chosenEnemyAvater = "♠";
         public string _chosenGender = "♂";
         public string _chosenName = "Alejandro";
-        public int _chosenDifficulty = 1;
         
-        
+        public int _chosenDifficulty = 1;       
 
         public string[] _options = {"Character","Character Name", "Difficulty","Enemy","Gender","Exit and Save"};
         public string[] _playerAva = { "☺", "☻", "♫", "♦"};
@@ -23,7 +22,7 @@ namespace FinalProject
         public string[] _enemyAva = { "♠", "☼", "†", "©" };
         public string[] _gender = { "♂", "♀" };
         public string[] _name = { "Back"};
-
+        
         public Options()
         {
 
@@ -53,7 +52,6 @@ namespace FinalProject
         {
             _chosenName = name;
         }
-    
     
     }
 

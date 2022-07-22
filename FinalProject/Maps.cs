@@ -46,20 +46,20 @@ namespace FinalProject
         //
         ChestLog _chest;
         EnemyGen _enemy;
-        PlayerStats _currentPlayer;
-        Options _playerOptions;
+        PlayerStats _currentPlayer ;
+        Options _options;
         //
 
-        public Maps(Options playerOptions)
+        public Maps(Options options)
         {
-            _playerOptions = playerOptions;
-            _currentPlayer = new PlayerStats(_playerOptions._chosenName);
+            _options = options;
+            _currentPlayer = new PlayerStats(options);
         }
 
         public void LoadMap()
         {
             _mineTriggerd = false;
-            _enemy = new EnemyGen(this);
+            _enemy = new EnemyGen(this, _options);
             _chest = new ChestLog(_currentPlayer);
             Random rnd = new Random();
             stepsTarget = rnd.Next(90, 150);
@@ -213,14 +213,21 @@ namespace FinalProject
             {
                 for (int j = 0; j < map.GetLength(1); j++)
                 {
+                    if (map[i, j] == _enemy.GetEnemyAvatar())
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(map[i, j]);
+                        Console.ForegroundColor = ConsoleColor.White;
+                        continue;
+                    } 
                     switch (map[i, j])
                     {
-                        // Fix N Shit
-                        case "N":
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write(map[i, j]);
-                            Console.ForegroundColor = ConsoleColor.White;
-                            break;
+                        //// Fix N Shit
+                        //case "N":
+                        //    Console.ForegroundColor = ConsoleColor.Red;
+                        //    Console.Write(map[i, j]);
+                        //    Console.ForegroundColor = ConsoleColor.White;
+                        //    break;
                         case "8":
                             Console.ForegroundColor = ConsoleColor.Yellow;
                             Console.Write(map[i, j]);
@@ -347,7 +354,7 @@ namespace FinalProject
 
             mapSize[chestX, chestY] = "8";
 
-            mapSize[enemyX, enemyY] = "N";         
+            mapSize[enemyX, enemyY] = _enemy.GetEnemyAvatar();         
         }
 
         private void SetXY(int row, int col)

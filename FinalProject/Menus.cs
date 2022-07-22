@@ -19,18 +19,16 @@ namespace FinalProject
         MenuLog _genderLog;
         MenuLog _nameLog;
 
-        Options options = new Options();
-
-        private int _lastChoice;
+        public Options options = new Options();
 
         private string[] _mainMenu = { "Play", "How To Play", "Options", "About", "Exit", };
         private string[] _howToArr = { "Play", "Exit" };
         private string[] _aboutArr = { "Back To Menu" };
 
 
-        public Menus(Maps map)
+        public Menus()
         {
-            _map = map; 
+            _map = new Maps(options);
             _main = new MenuLog(_mainMenu);
             _howTo = new MenuLog(_howToArr);
             _about = new MenuLog(_aboutArr);
