@@ -266,7 +266,7 @@ namespace FinalProject
             // Cant Load next level before killing enemy
             if (_lvlClearRec == true)
             {
-                Prompts.ClearRoomPrompt();
+                Console.WriteLine(Prompts.ClearRoomPrompt());
             }
 
             // Debug

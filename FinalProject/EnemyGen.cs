@@ -27,7 +27,7 @@ namespace FinalProject
             _name = drawName;
             _options = option;
             _enemyAvatar = _options._chosenEnemyAvater;
-            _damage = (int)(EnemyNameDamage[drawName] * ((map.currentLvl * 0.2f + 1) * _options._chosenDifficulty));
+            _damage = (int)(EnemyNameDamage[drawName] * (map.currentLvl * 0.1f *_options._chosenDifficulty + 1));
             int hp = _damage * 3;
             if (hp <= 0)
             {

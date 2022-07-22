@@ -42,7 +42,7 @@ namespace FinalProject
 
         public void MainMenu()
         {
-            int currentIndex = _main.RunMenu();
+            int currentIndex = _main.WaterMarkRunMenu(Prompts.BatFluffPrompt());
             switch (currentIndex)
             {
                 case 0:
@@ -65,7 +65,7 @@ namespace FinalProject
         
         private void HowToPlay()
         {
-            int currentIndex = _howTo.RunMenu();
+            int currentIndex = _howTo.WaterMarkRunMenu(Prompts.HowToPlayPrompt());
             switch (currentIndex)
             {
                 case 0:
@@ -80,7 +80,7 @@ namespace FinalProject
 
         private void About()
         {
-            int currentIndex = _about.RunMenu();
+            int currentIndex = _about.WaterMarkRunMenu(Prompts.AboutDescription());
             switch (currentIndex)
             {
                 case 0:
@@ -91,7 +91,7 @@ namespace FinalProject
 
         private void Options()
         {
-            int currentIndex = _options.RunMenu();
+            int currentIndex = _options.WaterMarkRunMenu(Prompts.OptionPrompt());
             switch (currentIndex)
             {
                 case 0:
