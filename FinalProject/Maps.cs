@@ -106,7 +106,7 @@ namespace FinalProject
             // Player Status Check
             if (_currentPlayer.PlayerPara.IsDead())
             {
-                Prompts.PlayerDiedPrompt();
+                DeathSequence();
             }
             // Mine Check
             if (playerX == mineX && playerY == mineY && _mineTriggerd == false)
@@ -167,56 +167,60 @@ namespace FinalProject
 
         private void PlayerMovement(int row,int col,string[,] map)
         {
-            PlayerCheck(map);
-            PrintGame(map);
-            ConsoleKeyInfo currentPress = Console.ReadKey(true);
-            int mapHieght = map.GetLength(0);
-            int mapLength = map.GetLength(1);
+            if (!_currentPlayer.PlayerPara.IsDead())
+            {
+                PlayerCheck(map);
+                PrintGame(map);
+                ConsoleKeyInfo currentPress = Console.ReadKey(true);
+                int mapHieght = map.GetLength(0);
+                int mapLength = map.GetLength(1);
 
-            //Console.SetCursorPosition(playerX, playerY);
-            SetXY(row, col);
+                //Console.SetCursorPosition(playerX, playerY);
+                SetXY(row, col);
 
-            // Right
-            if ((currentPress.Key == ConsoleKey.D && row < mapLength - 2) && map[playerX,playerY + 1] != "|")
-            {
-                row++;
-                stepsTaken++;
-                Console.SetCursorPosition(row, col);
-                SetXY(row, col);
-                PlayerMovement(row,col,map);
+                // Right
+                if ((currentPress.Key == ConsoleKey.D && row < mapLength - 2) && map[playerX, playerY + 1] != "|")
+                {
+                    row++;
+                    stepsTaken++;
+                    Console.SetCursorPosition(row, col);
+                    SetXY(row, col);
+                    PlayerMovement(row, col, map);
+                }
+                // Left
+                if ((currentPress.Key == ConsoleKey.A && row > 1) && map[playerX, playerY - 1] != "|")
+                {
+                    row--;
+                    stepsTaken++;
+                    Console.SetCursorPosition(row, col);
+                    SetXY(row, col);
+                    PlayerMovement(row, col, map);
+                }
+                // Up
+                if ((currentPress.Key == ConsoleKey.W && col > 1) && map[playerX - 1, playerY] != "-" && map[playerX - 1, playerY] != "|")
+                {
+                    col--;
+                    stepsTaken++;
+                    Console.SetCursorPosition(row, col);
+                    SetXY(row, col);
+                    PlayerMovement(row, col, map);
+                }
+                // Down
+                if ((currentPress.Key == ConsoleKey.S && col < mapHieght - 2) && map[playerX + 1, playerY] != "-" && map[playerX + 1, playerY] != "|")
+                {
+                    col++;
+                    stepsTaken++;
+                    Console.SetCursorPosition(row, col);
+                    SetXY(row, col);
+                    PlayerMovement(row, col, map);
+                }
+                else
+                {
+                    PlayerMovement(row, col, map);
+                    SetXY(row, col);
+                }
             }
-            // Left
-            if ((currentPress.Key == ConsoleKey.A && row > 1) && map[playerX, playerY - 1] != "|")
-            {
-                row--;
-                stepsTaken++;
-                Console.SetCursorPosition(row, col);
-                SetXY(row, col);
-                PlayerMovement(row, col, map);
-            }
-            // Up
-            if ((currentPress.Key == ConsoleKey.W && col > 1) && map[playerX - 1,playerY] != "-" && map[playerX - 1, playerY] != "|")
-            {
-                col--;
-                stepsTaken++;
-                Console.SetCursorPosition(row, col);
-                SetXY(row, col);
-                PlayerMovement(row, col, map); 
-            }
-            // Down
-            if ((currentPress.Key == ConsoleKey.S && col < mapHieght - 2) && map[playerX + 1, playerY] != "-" && map[playerX + 1, playerY] != "|")
-            {
-                col++;
-                stepsTaken++;
-                Console.SetCursorPosition(row, col);
-                SetXY(row, col);
-                PlayerMovement(row, col, map);
-            }
-            else
-            {
-                PlayerMovement(row, col, map);
-                SetXY(row, col);
-            }
+            else { DeathSequence();}
         }
 
         private void PrintGame(string[,] map)
@@ -292,15 +296,15 @@ namespace FinalProject
 
             Prompts.GameNamePrompt();
 
-            // Debug
-            Console.WriteLine();
-            Console.WriteLine($"Debug: Mine Loc is {mineX},{mineY}");
-            Console.WriteLine($"Debug: PlayerX {playerX} PlayerY {playerY},player damage {_currentPlayer.PlayerPara.ShowDamage()} ,Max Hp {_currentPlayer.PlayerPara.GetMaxHp()}");
-            Console.WriteLine($"Debug: Row {rowcheck} Col {colcheck}");
-            Console.WriteLine($"Debug: enemy Damage {_enemy.enemyPara.ShowDamage()}");
-            Console.WriteLine($"Debug: player avatar {_options._chosenAvater} name {_options._chosenName} gender {_options._chosenGender}");
-            Console.WriteLine(Console.GetCursorPosition());
-            // Should be next to Start Postion ** Note this is the last postion where cursor shown (Right on game start)
+            //// Debug
+            //Console.WriteLine();
+            //Console.WriteLine($"Debug: Mine Loc is {mineX},{mineY}");
+            //Console.WriteLine($"Debug: PlayerX {playerX} PlayerY {playerY},player damage {_currentPlayer.PlayerPara.ShowDamage()} ,Max Hp {_currentPlayer.PlayerPara.GetMaxHp()}");
+            //Console.WriteLine($"Debug: Row {rowcheck} Col {colcheck}");
+            //Console.WriteLine($"Debug: enemy Damage {_enemy.enemyPara.ShowDamage()}");
+            //Console.WriteLine($"Debug: player avatar {_options._chosenAvater} name {_options._chosenName} gender {_options._chosenGender}");
+            //Console.WriteLine(Console.GetCursorPosition());
+            //// Should be next to Start Postion ** Note this is the last postion where cursor shown (Right on game start)
             Console.SetCursorPosition(playerY,playerX);   
         }
 
@@ -429,6 +433,14 @@ namespace FinalProject
             }
         }
 
+        private void DeathSequence()
+        {
+            Console.Clear();
+            Prompts.PlayerDiedPrompt();
+            Console.ReadKey(true);
+            Menus menus = new Menus();
+            menus.MainMenu();
+        }
     }
 }
 
