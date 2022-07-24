@@ -46,6 +46,7 @@ namespace FinalProject
             switch (currentIndex)
             {
                 case 0:
+                    _map.FirstLoad();
                     _map.LoadMap();
                     break;
                 case 1:
@@ -69,6 +70,7 @@ namespace FinalProject
             switch (currentIndex)
             {
                 case 0:
+                    _map.FirstLoad();
                     _map.LoadMap();
                     break;
                 case 1:

@@ -33,7 +33,7 @@ namespace FinalProject
             {
                 hp = map.currentLvl * 3;
             }
-            enemyPara = new Para(hp, _damage);
+            enemyPara = new Para(hp, _damage,_name);
         }
 
         public string GetName()

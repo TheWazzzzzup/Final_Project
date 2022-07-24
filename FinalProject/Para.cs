@@ -8,16 +8,32 @@ namespace FinalProject
 {
     class Para
     {
+        public struct Info
+        {
+            public string AttackerName;
+            public string DefenderName;
+            public int AttackerDamage;
+            public int DefenderHp;
+            public int AttackerMaxHp;
+            public int AttackerHp;
+        }
+
+        public Info playerAttack;
+        Info enemyAttack;
+
         private int _hp;
         private int _damage;
         private bool _isDead = false;
         private int _maxHp;
 
-        public Para (int hp, int damage)
+        private string _name;
+
+        public Para (int hp, int damage,string name)
         {
             _maxHp = hp;
             _damage = damage;
             _hp = _maxHp;
+            _name = name;
         }
 
         public int GetMaxHp()
@@ -67,6 +83,13 @@ namespace FinalProject
                 challanger._hp = 0;
                 challanger._isDead = true;
             }
+
+            playerAttack.DefenderHp = challanger._hp;
+            playerAttack.DefenderName = challanger._name;
+            playerAttack.AttackerDamage = this._damage;
+            playerAttack.AttackerName = this._name;
+            playerAttack.AttackerMaxHp = this._maxHp;
+            playerAttack.AttackerHp = this._hp;
         }
 
         public void GetDamage(int damage)
@@ -89,22 +112,5 @@ namespace FinalProject
             }
         }
 
-        public void SummonUlti(Para challanger)
-        {
-            Random random = new Random();
-            if (random.Next(0,10) == 9)
-            {
-                challanger._hp -= 666;
-                if (challanger._hp < 0)
-                {
-                    challanger._hp = 0;
-                    challanger._isDead = true;
-                }
-            }
-            else
-            {
-                _hp = 1;
-            }
-        }
     }
 }

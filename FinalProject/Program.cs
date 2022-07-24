@@ -3,21 +3,16 @@ class Porgram
 {
     public static void Main(string[] args)
     {
+        Console.CursorVisible = false;
+        //HUD hud = new HUD();
+        //hud.PrintHud(95,120);
+
         Menus gameMenu = new Menus();
         gameMenu.MainMenu();
 
-
-
-        //// Turns text color into selcted color
-        //// Console.ForegroundColor = ConsoleColor.Green
-
-        //Prompts.StartGamePrompt();
-
-        //Maps map = new Maps();
-
-        //map.LoadMap();
     }
 }
+
 // Note The X and Y Values You Made Are Oppsite Of (Visual Studio > Console. Defulat)
 
 // Fluff Ideas:

@@ -33,12 +33,12 @@ namespace FinalProject
         private int exitPointX;
         private int exitPointY;
 
-        public int currentLvl = 0;
+        private int lastIX;
+        private int lastJY;
 
-        // Random number of steps will make the Console clear and show mine location for limited time // Date time, time Span
-        System.Timers.Timer amit = new System.Timers.Timer(1000);
-        private int stepsTaken = 0;
-        private int stepsTarget;
+        private int stepsTaken;
+
+        public int currentLvl = 0;
 
         private bool _mineTriggerd = false;
         private bool _lvlClearRec = false;
@@ -48,26 +48,40 @@ namespace FinalProject
         EnemyGen _enemy;
         PlayerStats _currentPlayer ;
         Options _options;
+        HUD _hud = new HUD();
         //
 
         public Maps(Options options)
         {
             _options = options;
-            _currentPlayer = new PlayerStats(options);
+        }
+
+        public void FirstLoad()
+        {
+            _currentPlayer = new PlayerStats(_options);
         }
 
         public void LoadMap()
         {
-            _mineTriggerd = false;
-            _enemy = new EnemyGen(this, _options);
-            _chest = new ChestLog(_currentPlayer);
-            Random rnd = new Random();
-            stepsTarget = rnd.Next(90, 150);
-            var map = new string[rnd.Next(10, 30), rnd.Next(30, 110)];
-            currentLvl++;
-            CreateFrame(map);
-            PrintGame(map);
-            PlayerMovement(playerY,playerX,map);
+            Console.Clear();
+            // Resets and count
+            {
+                currentLvl++;
+                _mineTriggerd = false;
+                lastIX = 500;
+                lastJY = 500;
+            }
+            // Generate
+            {
+                _enemy = new EnemyGen(this, _options);
+                _chest = new ChestLog(_currentPlayer);
+                Random rnd = new Random();
+                var map = new string[rnd.Next(10, 30), rnd.Next(30, 110)];
+                CreateFrame(map);
+                PrintGame(map);
+                PlayerMovement(playerY, playerX, map);
+            }
+  
         }
 
         private void LevelCleardLogic(string[,] map)
@@ -106,7 +120,7 @@ namespace FinalProject
             {
                 _chest.ChestEncounter();
                 _map[chestX, chestY] = "s";
-                Console.Clear();
+                Console.SetCursorPosition(0, 0);
                 PrintGame(_map);
             }
             // Exit Check
@@ -138,10 +152,9 @@ namespace FinalProject
                     {
                         if (_currentPlayer.PlayerPara.IsDead() == false && _enemy.enemyPara.IsDead() ==  false)
                         {
-                            // OnCollisonEnter""
                             _currentPlayer.PlayerPara.InflictDamage(_enemy.enemyPara);
                             _currentPlayer.PlayerPara.GetDamage(_enemy.enemyPara);
-                            Console.Clear();
+                            Console.SetCursorPosition(0, 0);
                             PrintGame(_map);
                         }
                     }
@@ -152,6 +165,7 @@ namespace FinalProject
         private void PlayerMovement(int row,int col,string[,] map)
         {
             PlayerCheck(map);
+            PrintGame(map);
             ConsoleKeyInfo currentPress = Console.ReadKey(true);
             int mapHieght = map.GetLength(0);
             int mapLength = map.GetLength(1);
@@ -204,7 +218,12 @@ namespace FinalProject
 
         private void PrintGame(string[,] map)
         {
-            Console.Clear();
+            Console.SetCursorPosition(0, 0);
+            Console.CursorVisible = false;
+            if ((lastIX < map.GetLength(0) || lastJY < map.GetLength(1)) && map[lastIX, lastJY] == _currentPlayer.GetAvatar())
+            {
+                map[lastIX, lastJY] = " ";
+            }
             if (_enemy.enemyPara.IsDead())
             {
                 map[enemyX, enemyY] = " ";
@@ -213,7 +232,13 @@ namespace FinalProject
             {
                 for (int j = 0; j < map.GetLength(1); j++)
                 {
-                    if (map[i, j] == _enemy.GetEnemyAvatar())
+                    if (j == playerY && i == playerX && map[i,j] == " ")
+                    {
+                        map[i, j] = _currentPlayer.GetAvatar();
+                        lastIX = i;
+                        lastJY = j;
+                    }
+                    else if (map[i, j] == _enemy.GetEnemyAvatar())
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write(map[i, j]);
@@ -222,12 +247,6 @@ namespace FinalProject
                     } 
                     switch (map[i, j])
                     {
-                        //// Fix N Shit
-                        //case "N":
-                        //    Console.ForegroundColor = ConsoleColor.Red;
-                        //    Console.Write(map[i, j]);
-                        //    Console.ForegroundColor = ConsoleColor.White;
-                        //    break;
                         case "8":
                             Console.ForegroundColor = ConsoleColor.Yellow;
                             Console.Write(map[i, j]);
@@ -260,14 +279,13 @@ namespace FinalProject
                 }
                 Console.WriteLine();
             }
-            Console.WriteLine($"Current Lvl {currentLvl}, Player HP: {_currentPlayer.PlayerPara.GetHp()} Dead = {_currentPlayer.PlayerPara.IsDead()}"); // place holder
-            Console.WriteLine(_chest.ChestOutput());
-            Console.WriteLine($"{_enemy.GetName()} HP: {_enemy.enemyPara.GetHp()} Dead = {_enemy.enemyPara.IsDead()}");
-            // Cant Load next level before killing enemy
+            _hud.PrintHud(_currentPlayer.PlayerPara.GetHp(), _currentPlayer.PlayerPara.GetMaxHp(),_currentPlayer.PlayerPara.ShowDamage(),currentLvl);
             if (_lvlClearRec == true)
             {
                 Console.WriteLine(Prompts.ClearRoomPrompt());
             }
+
+            Prompts.GameNamePrompt();
 
             // Debug
             Console.WriteLine();
@@ -275,9 +293,8 @@ namespace FinalProject
             Console.WriteLine($"Debug: PlayerX {playerX} PlayerY {playerY},player damage {_currentPlayer.PlayerPara.ShowDamage()} ,Max Hp {_currentPlayer.PlayerPara.GetMaxHp()}");
             Console.WriteLine($"Debug: Row {rowcheck} Col {colcheck}");
             Console.WriteLine($"Debug: enemy Damage {_enemy.enemyPara.ShowDamage()}");
+            Console.WriteLine($"Debug: player avatar {_options._chosenAvater} name {_options._chosenName} gender {_options._chosenGender}");
             Console.WriteLine(Console.GetCursorPosition());
-
-            Prompts.GameNamePrompt();
             // Should be next to Start Postion ** Note this is the last postion where cursor shown (Right on game start)
             Console.SetCursorPosition(playerY,playerX);   
         }
@@ -406,6 +423,7 @@ namespace FinalProject
                 }
             }
         }
+
     }
 }
 

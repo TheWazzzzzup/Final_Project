@@ -14,7 +14,7 @@ namespace FinalProject
     [DataContract] 
     class PlayerStats
     {
-        public  Para PlayerPara = new Para(100,7);
+        public Para PlayerPara;
 
         private Options _options;
 
@@ -25,9 +25,8 @@ namespace FinalProject
         public PlayerStats(Options options)
         {
             _options = options;
-            _name = _options._chosenName;
-            _gender = _options._chosenGender;
-            _avatar = _options._chosenAvater;
+            SetDecription();
+            PlayerPara = new Para(100, 7, options._chosenName);
         }
 
         public string GetName()
@@ -45,5 +44,11 @@ namespace FinalProject
             return _avatar;
         }
 
+        private void SetDecription()
+        {
+            _name = _options._chosenName;
+            _gender = _options._chosenGender;
+            _avatar = _options._chosenAvater;
+        }
     }
 }
