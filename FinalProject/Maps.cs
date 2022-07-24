@@ -42,6 +42,7 @@ namespace FinalProject
 
         private bool _mineTriggerd = false;
         private bool _lvlClearRec = false;
+        private bool _battleInitiate = false;
 
         //
         ChestLog _chest;
@@ -68,6 +69,7 @@ namespace FinalProject
             {
                 currentLvl++;
                 _mineTriggerd = false;
+                _battleInitiate = false;
                 lastIX = 500;
                 lastJY = 500;
             }
@@ -152,9 +154,10 @@ namespace FinalProject
                     {
                         if (_currentPlayer.PlayerPara.IsDead() == false && _enemy.enemyPara.IsDead() ==  false)
                         {
+                            _battleInitiate = true;
                             _currentPlayer.PlayerPara.InflictDamage(_enemy.enemyPara);
                             _currentPlayer.PlayerPara.GetDamage(_enemy.enemyPara);
-                            Console.SetCursorPosition(0, 0);
+                            Console.Clear();
                             PrintGame(_map);
                         }
                     }
@@ -279,7 +282,9 @@ namespace FinalProject
                 }
                 Console.WriteLine();
             }
-            _hud.PrintHud(_currentPlayer.PlayerPara.GetHp(), _currentPlayer.PlayerPara.GetMaxHp(),_currentPlayer.PlayerPara.ShowDamage(),currentLvl);
+            //_hud.PrintHud(_currentPlayer.PlayerPara.GetHp(), _currentPlayer.PlayerPara.GetMaxHp(),_currentPlayer.PlayerPara.ShowDamage(),currentLvl);
+            _currentPlayer.PlayerPara.UpdateStruct(_enemy.enemyPara);
+            _hud.PrintHud(_currentPlayer.PlayerPara,currentLvl,_battleInitiate);
             if (_lvlClearRec == true)
             {
                 Console.WriteLine(Prompts.ClearRoomPrompt());

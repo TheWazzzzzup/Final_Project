@@ -16,10 +16,10 @@ namespace FinalProject
             public int DefenderHp;
             public int AttackerMaxHp;
             public int AttackerHp;
+            public int DefenderDamage;
         }
 
         public Info playerAttack;
-        Info enemyAttack;
 
         private int _hp;
         private int _damage;
@@ -75,6 +75,14 @@ namespace FinalProject
             _damage += boostValue;
         }
 
+        public void UpdateStruct()
+        {
+            playerAttack.AttackerName = _name;
+            playerAttack.AttackerDamage = _damage;
+            playerAttack.AttackerHp = _hp;
+            playerAttack.AttackerMaxHp = _maxHp;
+        }
+
         public void InflictDamage(Para challanger)
         {
             challanger._hp -= _damage;
@@ -83,13 +91,7 @@ namespace FinalProject
                 challanger._hp = 0;
                 challanger._isDead = true;
             }
-
-            playerAttack.DefenderHp = challanger._hp;
-            playerAttack.DefenderName = challanger._name;
-            playerAttack.AttackerDamage = this._damage;
-            playerAttack.AttackerName = this._name;
-            playerAttack.AttackerMaxHp = this._maxHp;
-            playerAttack.AttackerHp = this._hp;
+            UpdateStruct(challanger);
         }
 
         public void GetDamage(int damage)
@@ -109,7 +111,19 @@ namespace FinalProject
             {
                 _hp = 0;
                 _isDead = true;
+                UpdateStruct(challanger);
             }
+        }
+
+        public void UpdateStruct(Para challanger)
+        {
+            playerAttack.AttackerName = _name;
+            playerAttack.AttackerDamage = _damage;
+            playerAttack.AttackerHp = _hp;
+            playerAttack.AttackerMaxHp = _maxHp;
+            playerAttack.DefenderHp = challanger._hp;
+            playerAttack.DefenderName = challanger._name;
+            playerAttack.DefenderDamage = challanger._damage;
         }
 
     }

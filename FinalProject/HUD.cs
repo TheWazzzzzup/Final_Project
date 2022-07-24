@@ -59,18 +59,74 @@ namespace FinalProject
             
         }
 
-        public void PlayerEncounterLine(string name, string enemyname, int damage, int enemyHp)
+        public void PrintHud(Para player, int level, bool showLog)
         {
-            Console.WriteLine($"╔════════════╗                         {name} Attacked {enemyname} for {damage} Damage Toad HP: {enemyHp}");
+            HpCaculation(player.playerAttack.AttackerHp, player.playerAttack.AttackerMaxHp);
+            Console.WriteLine();
+            Console.WriteLine("      HP           Damage     Level");
+            if (showLog)
+            {
+                PlayerEncounterLine(player);
+                Console.Write("║ ");
+                for (int i = 0; i < _hpHud.Length; i++)
+                {
+                    if (i <= _hp)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("▓");
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    else
+                    {
+                        Console.Write("▓");
+                    }
+                }
+                Console.WriteLine($" ║       {player.playerAttack.AttackerDamage}          {level}");
+                EnemyEncounterLine(player);
+                Console.WriteLine($"    {player.playerAttack.AttackerHp}/{player.playerAttack.AttackerMaxHp}");
+            }
+            else
+            {
+            Console.WriteLine("╔════════════╗");
+            Console.Write("║ ");
+            for (int i = 0; i < _hpHud.Length; i++)
+            {
+                if (i <= _hp)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("▓");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else
+                {
+                    Console.Write("▓");
+                }
+            }
+            Console.WriteLine($" ║       {player.playerAttack.AttackerDamage}          {level}");
+            Console.WriteLine("╚════════════╝");
+            Console.WriteLine($"    {player.playerAttack.AttackerHp}/{player.playerAttack.AttackerMaxHp}");
+            }
+        }
+
+        public void PlayerEncounterLine(Para player)
+        {
+            Console.WriteLine($"╔════════════╗                         You " +
+                $"Attacked {player.playerAttack.DefenderName} for {player.playerAttack.AttackerDamage} " +
+                $"Damage, {player.playerAttack.DefenderName} HP: {player.playerAttack.DefenderHp}");
+        }
+
+        public void EnemyEncounterLine(Para player)
+        {
+            Console.WriteLine($"╚════════════╝                         {player.playerAttack.DefenderName} Attacked You For {player.playerAttack.DefenderDamage} Damage.");
         }
 
 
-//       HP           Damage     Level 
-// ╔════════════╗                         You Attacked Toad for 12 Damage Toad HP:
-// ║ ▓▓▓▓▓▓▓▓▓▓ ║       7          1
-// ╚════════════╝                         Toad Attacked You For 5 Damage.
-//     100/100
+        //       HP           Damage     Level 
+        // ╔════════════╗                         You Attacked Toad for 12 Damage Toad HP:
+        // ║ ▓▓▓▓▓▓▓▓▓▓ ║       7          1
+        // ╚════════════╝                         Toad Attacked You For 5 Damage.
+        //     100/100
 
-        
+
     }
 }
